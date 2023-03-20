@@ -295,12 +295,70 @@ class ProbAttention(nn.Module):
         # else:
         #     return context
 
+class MetaFormerBlock(nn.Module):
+    """
+    Implementation of one MetaFormer block.
+    --dim: embedding dim
+    --token_mixer: token mixer module
+    --mlp_ratio: mlp expansion ratio
+    --act_layer: activation
+    --norm_layer: normalization
+    --drop: dropout rate
+    --drop path: Stochastic Depth, 
+        refer to https://arxiv.org/abs/1603.09382
+    --use_layer_scale, --layer_scale_init_value: LayerScale, 
+        refer to https://arxiv.org/abs/2103.17239
+    """
+    def __init__(self, dim, 
+                 token_mixer=nn.Identity, 
+                 mlp_ratio=4., 
+                 act_layer=nn.GELU, norm_layer=LayerNormChannel, 
+                 drop=0., drop_path=0., 
+                 use_layer_scale=True, layer_scale_init_value=1e-5):
+
+        super().__init__()
+
+        self.norm1 = norm_layer(dim)
+        self.token_mixer = token_mixer(dim=dim)
+        self.norm2 = norm_layer(dim)
+        mlp_hidden_dim = int(dim * mlp_ratio)
+        self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, 
+                       act_layer=act_layer, drop=drop)
+        self.drop_path1 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
+
+        self.drop_path = DropPath(drop_path) if drop_path > 0. \
+            else nn.Identity()
+        self.use_layer_scale = use_layer_scale
+        if use_layer_scale:
+            self.layer_scale_1 = nn.Parameter(
+                layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+            self.layer_scale_2 = nn.Parameter(
+                layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+
+        self.drop_path2 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
+
+
+    def forward(self, x):
+        if self.use_layer_scale:
+            x = x + self.drop_path(
+                self.layer_scale_1.unsqueeze(-1).unsqueeze(-1)
+                * self.token_mixer(self.norm1(x)))
+            x = x + self.drop_path(
+                self.layer_scale_2.unsqueeze(-1).unsqueeze(-1)
+                * self.mlp(self.norm2(x)))
+        else:
+            x = x + self.drop_path(self.token_mixer(self.norm1(x)))
+            x = x + self.drop_path(self.mlp(self.norm2(x)))
+        return x
+    
 
 # 20230320 Encoder Post-LN
 class Block(nn.Module):
 
-    def __init__(self, dim, num_heads, mlp_ratio=4., attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
-                 drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, comb=False, changedim=False, currentdim=0, depth=0, vis=False):
+    def __init__(self, dim, num_heads, mlp_ratio=4., 
+                 attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
+                 drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, 
+                 comb=False, changedim=False, currentdim=0, depth=0, vis=False):
         super().__init__()
 
         self.changedim = changedim
