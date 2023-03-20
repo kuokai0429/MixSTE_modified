@@ -296,6 +296,7 @@ class ProbAttention(nn.Module):
         #     return context
 
 
+# 20230320 Encoder Post-LN
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
@@ -326,8 +327,9 @@ class Block(nn.Module):
         self.vis = vis
 
     def forward(self, x, vis=False):
-        x = x + self.drop_path(self.attn(self.norm1(x), vis=vis))
-        x = x + self.drop_path(self.mlp(self.norm2(x)))
+
+        x = x + self.drop_path(self.norm1(self.attn(x, vis=vis)))
+        x = x + self.drop_path(self.norm2(self.mlp(x)))
         
         if self.changedim and self.currentdim < self.depth//2:
             x = rearrange(x, 'b t c -> b c t')
@@ -338,6 +340,50 @@ class Block(nn.Module):
             x = self.improve(x)
             x = rearrange(x, 'b c t -> b t c')
         return x
+
+# 20230320 Encoder Pre-LN
+# class Block(nn.Module):
+
+#     def __init__(self, dim, num_heads, mlp_ratio=4., attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
+#                  drop_path=0., act_layer=nn.GELU, norm_layer=nn.LayerNorm, comb=False, changedim=False, currentdim=0, depth=0, vis=False):
+#         super().__init__()
+
+#         self.changedim = changedim
+#         self.currentdim = currentdim
+#         self.depth = depth
+#         if self.changedim:
+#             assert self.depth>0
+
+#         self.norm1 = norm_layer(dim)
+#         self.attn = attention(
+#             dim, num_heads=num_heads, qkv_bias=qkv_bias, qk_scale=qk_scale, attn_drop=attn_drop, proj_drop=drop, comb=comb, vis=vis)
+#         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
+#         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
+#         self.norm2 = norm_layer(dim)
+#         mlp_hidden_dim = int(dim * mlp_ratio)
+#         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        
+#         if self.changedim and self.currentdim < self.depth//2:
+#             self.reduction = nn.Conv1d(dim, dim//2, kernel_size=1)
+#             # self.reduction = nn.Linear(dim, dim//2)
+#         elif self.changedim and depth > self.currentdim > self.depth//2:
+#             self.improve = nn.Conv1d(dim, dim*2, kernel_size=1)
+#             # self.improve = nn.Linear(dim, dim*2)
+#         self.vis = vis
+
+#     def forward(self, x, vis=False):
+#         x = x + self.drop_path(self.attn(self.norm1(x), vis=vis))
+#         x = x + self.drop_path(self.mlp(self.norm2(x)))
+        
+#         if self.changedim and self.currentdim < self.depth//2:
+#             x = rearrange(x, 'b t c -> b c t')
+#             x = self.reduction(x)
+#             x = rearrange(x, 'b c t -> b t c')
+#         elif self.changedim and self.depth > self.currentdim > self.depth//2:
+#             x = rearrange(x, 'b t c -> b c t')
+#             x = self.improve(x)
+#             x = rearrange(x, 'b c t -> b t c')
+#         return x
 
 class TemporalBlock(nn.Module):
     
