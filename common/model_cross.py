@@ -295,6 +295,21 @@ class ProbAttention(nn.Module):
         # else:
         #     return context
 
+# 2023.0320.1744 PoolFormer
+class Pooling(nn.Module):
+    """
+    Implementation of pooling for PoolFormer
+    --pool_size: pooling size
+    """
+    def __init__(self, pool_size=3, **kwargs):
+        super().__init__()
+        self.pool = nn.AvgPool2d(
+            pool_size, stride=1, padding=pool_size//2, count_include_pad=False)
+
+    def forward(self, x):
+        return self.pool(x) - x
+
+# 2023.0320.1744 PoolFormer
 class MetaFormerBlock(nn.Module):
     """
     Implementation of one MetaFormer block.
@@ -312,7 +327,7 @@ class MetaFormerBlock(nn.Module):
     def __init__(self, dim, 
                  token_mixer=nn.Identity, 
                  mlp_ratio=4., 
-                 act_layer=nn.GELU, norm_layer=LayerNormChannel, 
+                 act_layer=nn.GELU, norm_layer=nn.LayerNorm, 
                  drop=0., drop_path=0., 
                  use_layer_scale=True, layer_scale_init_value=1e-5):
 
@@ -351,7 +366,6 @@ class MetaFormerBlock(nn.Module):
             x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
     
-
 # 20230320 Encoder Post-LN
 class Block(nn.Module):
 
