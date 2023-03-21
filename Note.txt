@@ -1,0 +1,51 @@
+
+################## VideoPose3D 操作指令 ##################
+
+1. 資料準備型態轉換 Prepare Human3.6M Dataset
+
+cd data
+python prepare_data_h36m.py --from-archive h36m.zip
+cd ..
+
+
+2. 模型預測 Run Inference
+
+cd inference
+python infer_video_d2.py --cfg COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml --output-dir output --image-ext mp4 input
+cd ..
+
+cd data
+python prepare_data_2d_custom.py -i ../inference/output_directory -o myvideos
+cd ..
+
+python run.py -d custom -k myvideos -arc 3,3,3,3,3 -c checkpoint --evaluate pretrained_h36m_detectron_coco.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
+
+
+
+
+##################   MixSTE 操作指令   ##################
+
+1. 資料準備型態轉換 Prepare Human3.6M Dataset
+
+cd data
+python prepare_data_h36m.py --from-archive h36m.zip
+cd ..
+
+
+2. 模型預測 Run Inference
+
+python run.py -k cpn_ft_h36m_dbb -c checkpoint --evaluate checkpoint_cpn_243f_paper.bin -f 243 -s 243
+
+
+3. 模型訓練 Training
+
+python run.py -k cpn_ft_h36m_dbb -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1
+
+
+
+
+################## 主機訓練相關 ##################
+
+1. 防止 VScode SSH 連線於 24 小時候自動中斷。 (替代方案: 使用遠端連線連至 Server 主畫面訓練，設定 "電源" -> "螢幕轉黑" -> "永不")
+https://support.huaweicloud.com/intl/en-us/modelarts_faq/modelarts_05_3168.html
+
