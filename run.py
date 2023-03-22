@@ -49,10 +49,46 @@ torch.backends.cudnn.benchmark = False
 # ptvsd.wait_for_attach()
 # print("start debuging")
 # joints_errs = []
+
+######################################## Coco to h36m
+h36m_coco_order = [9, 11, 14, 12, 15, 13, 16, 4, 1, 5, 2, 6, 3]
+coco_order = [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+spple_keypoints = [10, 8, 0, 7]
+
+
+def coco_h36m(keypoints):
+    # keypoints: (T, N, 2) or (M, N, 2)
+
+    temporal = keypoints.shape[0]
+    keypoints_h36m = np.zeros_like(keypoints, dtype=np.float32)
+    htps_keypoints = np.zeros((temporal, 4, 2), dtype=np.float32)
+
+    # htps_keypoints: head, thorax, pelvis, spine
+    htps_keypoints[:, 0, 0] = np.mean(keypoints[:, 1:5, 0], axis=1, dtype=np.float32)
+    htps_keypoints[:, 0, 1] = np.sum(keypoints[:, 1:3, 1], axis=1, dtype=np.float32) - keypoints[:, 0, 1]
+    htps_keypoints[:, 1, :] = np.mean(keypoints[:, 5:7, :], axis=1, dtype=np.float32)
+    htps_keypoints[:, 1, :] += (keypoints[:, 0, :] - htps_keypoints[:, 1, :]) / 3
+
+    htps_keypoints[:, 2, :] = np.mean(keypoints[:, 11:13, :], axis=1, dtype=np.float32)
+    htps_keypoints[:, 3, :] = np.mean(keypoints[:, [5, 6, 11, 12], :], axis=1, dtype=np.float32)
+
+    keypoints_h36m[:, spple_keypoints, :] = htps_keypoints
+    keypoints_h36m[:, h36m_coco_order, :] = keypoints[:, coco_order, :]
+
+    keypoints_h36m[:, 9, :] -= (keypoints_h36m[:, 9, :] - np.mean(keypoints[:, 5:7, :], axis=1, dtype=np.float32)) / 4
+    keypoints_h36m[:, 7, 0] += 0.3*(keypoints_h36m[:, 7, 0] - np.mean(keypoints_h36m[:, [0, 8], 0], axis=1, dtype=np.float32))
+    keypoints_h36m[:, 8, 1] -= (np.mean(keypoints[:, 1:3, 1], axis=1, dtype=np.float32) - keypoints[:, 0, 1])*2/3
+
+    # half body: the joint of ankle and knee equal to hip
+    # keypoints_h36m[:, [2, 3]] = keypoints_h36m[:, [1, 1]]
+    # keypoints_h36m[:, [5, 6]] = keypoints_h36m[:, [4, 4]]
+    return keypoints_h36m
+
+#####################################################
+
 args = parse_args()
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = args.gpu
-
 
 if args.evaluate != '':
     description = "Evaluate!"
@@ -116,12 +152,27 @@ for subject in dataset.subjects():
 print('Loading 2D detections...')
 keypoints = np.load('data/data_2d_' + args.dataset + '_' + args.keypoints + '.npz', allow_pickle=True)
 keypoints_metadata = keypoints['metadata'].item()
-keypoints_symmetry = keypoints_metadata['keypoints_symmetry']
+# keypoints_symmetry = keypoints_metadata['keypoints_symmetry']
+
+# 2023.0322 Coco to H36M @Brian
+keypoints_symmetry = [
+    [4, 5, 6, 11, 12, 13],
+    [1, 2, 3, 14, 15, 16],
+]
+
 kps_left, kps_right = list(keypoints_symmetry[0]), list(keypoints_symmetry[1])
 joints_left, joints_right = list(dataset.skeleton().joints_left()), list(dataset.skeleton().joints_right())
 keypoints = keypoints['positions_2d'].item()
 
-###################
+# 2023.0322 Coco to H36M @Brian
+if keypoints_metadata['keypoints_symmetry'] != keypoints_symmetry:
+    print("Translate coco to h36m...")
+    kps_coco_2d =keypoints['myvideos.mp4']['custom'][0]
+    coco_to_h36m = coco_h36m(kps_coco_2d)
+    keypoints['myvideos.mp4']['custom'][0] = coco_to_h36m
+
+#####################################################
+
 for subject in dataset.subjects():
     assert subject in keypoints, 'Subject {} is missing from the 2D detections dataset'.format(subject)
     for action in dataset[subject].keys():
@@ -229,7 +280,7 @@ width = cam['res_w']
 height = cam['res_h']
 num_joints = keypoints_metadata['num_joints']
 
-#########################################PoseTransformer
+######################################### MixSTE
 
 model_pos_train =  MixSTE2(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=args.cs, depth=args.dep,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
@@ -237,12 +288,14 @@ model_pos_train =  MixSTE2(num_frame=receptive_field, num_joints=num_joints, in_
 model_pos =  MixSTE2(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=args.cs, depth=args.dep,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
 
-################ load weight ########################
+######################################### Load weight
+
 # posetrans_checkpoint = torch.load('./checkpoint/pretrained_posetrans.bin', map_location=lambda storage, loc: storage)
 # posetrans_checkpoint = posetrans_checkpoint["model_pos"]
 # model_pos_train = load_pretrained_weights(model_pos_train, posetrans_checkpoint)
 
-#################
+#####################################################
+
 causal_shift = 0
 model_params = 0
 for parameter in model_pos.parameters():
@@ -276,6 +329,7 @@ if not args.nolog:
     writer.add_text(args.log+'_'+TIMESTAMP + '/Testing Frames', str(test_generator.num_frames()))
 
 def eval_data_prepare(receptive_field, inputs_2d, inputs_3d):
+
     # inputs_2d_p = torch.squeeze(inputs_2d)
     # inputs_3d_p = inputs_3d.permute(1,0,2,3)
     # out_num = inputs_2d_p.shape[0] - receptive_field + 1
@@ -284,6 +338,7 @@ def eval_data_prepare(receptive_field, inputs_2d, inputs_3d):
     #     eval_input_2d[i,:,:,:] = inputs_2d_p[i:i+receptive_field, :, :]
     # return eval_input_2d, inputs_3d_p
     ### split into (f/f1, f1, n, 2)
+
     assert inputs_2d.shape[:-1] == inputs_3d.shape[:-1], "2d and 3d inputs shape must be same! "+str(inputs_2d.shape)+str(inputs_3d.shape)
     inputs_2d_p = torch.squeeze(inputs_2d)
     inputs_3d_p = torch.squeeze(inputs_3d)
@@ -316,8 +371,7 @@ def eval_data_prepare(receptive_field, inputs_2d, inputs_3d):
 
     return eval_input_2d, eval_input_3d
 
-
-###################
+#####################################################
 
 # Training start
 if not args.evaluate:
@@ -692,6 +746,14 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
             # model_traj.eval()
         N = 0
         for _, batch, batch_2d in test_generator.next_epoch():
+
+            # 2023.0322 Coco to H36M @Brian
+            ###############################
+
+
+
+            ###############################
+
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
             inputs_3d = torch.from_numpy(batch.astype('float32'))
 
