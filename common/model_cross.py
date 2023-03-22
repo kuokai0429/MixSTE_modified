@@ -23,6 +23,9 @@ from common.rela import RectifiedLinearAttention
 from common.routing_transformer import KmeansAttention
 from common.linearattention import LinearMultiheadAttention
 
+from typing import Sequence
+from functools import partial, reduce
+
 class Mlp(nn.Module):
     def __init__(self, in_features, hidden_features=None, out_features=None, act_layer=nn.GELU, drop=0., changedim=False, currentdim=0, depth=0):
         super().__init__()
@@ -295,7 +298,7 @@ class ProbAttention(nn.Module):
         # else:
         #     return context
 
-# 2023.0320.1744 PoolFormer @Brian
+# 2023.0322 MetaFormer @paper
 class Pooling(nn.Module):
     """
     Implementation of pooling for PoolFormer
@@ -309,7 +312,31 @@ class Pooling(nn.Module):
     def forward(self, x):
         return self.pool(x) - x
 
-# 2023.0320.1744 PoolFormer @Brian
+# 2023.0322 MetaFormer @paper
+class SpatialFc(nn.Module):
+    """SpatialFc module that take features with shape of (B,C,*) as input.
+    """
+    def __init__(
+        self, spatial_shape=[14, 14], **kwargs, 
+        ):
+        super().__init__()
+        if isinstance(spatial_shape, int):
+            spatial_shape = [spatial_shape]
+        assert isinstance(spatial_shape, Sequence), \
+            f'"spatial_shape" must by a sequence or int, ' \
+            f'get {type(spatial_shape)} instead.'
+        N = reduce(lambda x, y: x * y, spatial_shape)
+        self.fc = nn.Linear(N, N, bias=False)
+
+    def forward(self, x):
+        # input shape like [B, C, H, W]
+        shape = x.shape
+        x = torch.flatten(x, start_dim=2) # [B, C, H*W]
+        x = self.fc(x) # [B, C, H*W]
+        x = x.reshape(*shape) # [B, C, H, W]
+        return x
+
+# 2023.0322 MetaFormer @paper
 class MetaFormerBlock(nn.Module):
     """
     Implementation of one MetaFormer block.
@@ -366,7 +393,105 @@ class MetaFormerBlock(nn.Module):
             x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
     
-# 20230320 Encoder Post-LN @Brian
+# 2023.0322 PoolFormerBlock @paper
+# class PoolFormerBlock(nn.Module):
+#     """
+#     Implementation of one PoolFormer block.
+#     --dim: embedding dim
+#     --pool_size: pooling size
+#     --mlp_ratio: mlp expansion ratio
+#     --act_layer: activation
+#     --norm_layer: normalization
+#     --drop: dropout rate
+#     --drop path: Stochastic Depth, 
+#         refer to https://arxiv.org/abs/1603.09382
+#     --use_layer_scale, --layer_scale_init_value: LayerScale, 
+#         refer to https://arxiv.org/abs/2103.17239
+#     """
+#     def __init__(self, dim, pool_size=3, mlp_ratio=4., 
+#                  act_layer=nn.GELU, norm_layer=GroupNorm, 
+#                  drop=0., drop_path=0., 
+#                  use_layer_scale=True, layer_scale_init_value=1e-5):
+
+#         super().__init__()
+
+#         self.norm1 = norm_layer(dim)
+#         self.token_mixer = Pooling(pool_size=pool_size)
+#         self.norm2 = norm_layer(dim)
+#         mlp_hidden_dim = int(dim * mlp_ratio)
+#         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, 
+#                        act_layer=act_layer, drop=drop)
+
+#         # The following two techniques are useful to train deep PoolFormers.
+#         self.drop_path = DropPath(drop_path) if drop_path > 0. \
+#             else nn.Identity()
+#         self.use_layer_scale = use_layer_scale
+#         if use_layer_scale:
+#             self.layer_scale_1 = nn.Parameter(
+#                 layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+#             self.layer_scale_2 = nn.Parameter(
+#                 layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+
+#     def forward(self, x):
+#         if self.use_layer_scale:
+#             x = x + self.drop_path(
+#                 self.layer_scale_1.unsqueeze(-1).unsqueeze(-1)
+#                 * self.token_mixer(self.norm1(x)))
+#             x = x + self.drop_path(
+#                 self.layer_scale_2.unsqueeze(-1).unsqueeze(-1)
+#                 * self.mlp(self.norm2(x)))
+#         else:
+#             x = x + self.drop_path(self.token_mixer(self.norm1(x)))
+#             x = x + self.drop_path(self.mlp(self.norm2(x)))
+#         return x
+    
+# 2023.0322 PoolFormerBlock Encoder Pre-LN revised by @Brian
+class PoolFormerBlock(nn.Module):
+
+    def __init__(self, dim, pool_size=3, mlp_ratio=4., 
+                 drop=0., drop_path=0., 
+                 act_layer=nn.GELU, norm_layer=nn.LayerNorm, 
+                 changedim=False, currentdim=0, depth=0):
+        super().__init__()
+
+        self.changedim = changedim
+        self.currentdim = currentdim
+        self.depth = depth
+
+        if self.changedim:
+            assert self.depth>0
+
+        self.norm1 = norm_layer(dim)
+        self.token_mixer = Pooling(pool_size=pool_size)
+        # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
+        self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
+        self.norm2 = norm_layer(dim)
+        mlp_hidden_dim = int(dim * mlp_ratio)
+        self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        
+        if self.changedim and self.currentdim < self.depth//2:
+            self.reduction = nn.Conv1d(dim, dim//2, kernel_size=1)
+            # self.reduction = nn.Linear(dim, dim//2)
+        elif self.changedim and depth > self.currentdim > self.depth//2:
+            self.improve = nn.Conv1d(dim, dim*2, kernel_size=1)
+            # self.improve = nn.Linear(dim, dim*2)
+
+    def forward(self, x, vis=False):
+
+        x = x + self.drop_path(self.token_mixer(self.norm1(x)))
+        x = x + self.drop_path(self.mlp(self.norm2(x)))
+        
+        if self.changedim and self.currentdim < self.depth//2:
+            x = rearrange(x, 'b t c -> b c t')
+            x = self.reduction(x)
+            x = rearrange(x, 'b c t -> b t c')
+        elif self.changedim and self.depth > self.currentdim > self.depth//2:
+            x = rearrange(x, 'b t c -> b c t')
+            x = self.improve(x)
+            x = rearrange(x, 'b c t -> b t c')
+        return x
+    
+# 20230320 Attention Block Encoder Post-LN @Brian
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., 
@@ -413,7 +538,7 @@ class Block(nn.Module):
             x = rearrange(x, 'b c t -> b t c')
         return x
 
-# 20230320 Encoder Pre-LN @Brian
+# 20230320 Attention Block Encoder Pre-LN @Brian
 # class Block(nn.Module):
 
 #     def __init__(self, dim, num_heads, mlp_ratio=4., attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
@@ -498,18 +623,16 @@ class TemporalBlock(nn.Module):
         return x
 
 class attn_pooling(nn.Module):
+
     def __init__(self, in_feature, out_feature, stride=2, padding_mode='zeros'):
         super(attn_pooling, self).__init__()
-
         self.conv = nn.Conv1d(in_feature, out_feature, kernel_size=stride + 1,
                               padding=stride // 2, stride=stride,
                               padding_mode=padding_mode, groups=in_feature)
         self.fc = nn.Linear(in_feature, out_feature)
 
     def forward(self, x):
-
         x = self.conv(x)
-
         return x
 
 class  MixSTE2(nn.Module):
@@ -538,7 +661,7 @@ class  MixSTE2(nn.Module):
         embed_dim = embed_dim_ratio   #### temporal embed_dim is num_joints * spatial embedding dim ratio
         out_dim = 3     #### output dimension is num_joints * 3
 
-        ### spatial patch embedding
+        ## Spatial patch embedding
         self.Spatial_patch_to_embedding = nn.Linear(in_chans, embed_dim_ratio)
         # self.Spatial_patch_to_embedding = nn.Conv1d(in_chans, embed_dim_ratio, kernel_size=1, stride=1)
         self.Spatial_pos_embed = nn.Parameter(torch.zeros(1, num_joints, embed_dim_ratio))
@@ -555,23 +678,38 @@ class  MixSTE2(nn.Module):
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
         self.block_depth = depth
 
+        ## Attention Block @MixSTE
+
+        # self.STEblocks = nn.ModuleList([
+        #     Block(
+        #         dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+        #         drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+        #     for i in range(depth)])
+
+        # self.TTEblocks = nn.ModuleList([
+        #     Block(
+        #         dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+        #         drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
+        #     for i in range(depth)])
+        
+        ## 2023.0322 PoolFormer Block @Brian
+
         self.STEblocks = nn.ModuleList([
-            # Block: Attention Block
-            Block(
-                dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
-                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+            PoolFormerBlock(
+                dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, 
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
             for i in range(depth)])
 
         self.TTEblocks = nn.ModuleList([
-            Block(
-                dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
-                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
+            PoolFormerBlock(
+                dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio,
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
             for i in range(depth)])
 
         self.Spatial_norm = norm_layer(embed_dim_ratio)
         self.Temporal_norm = norm_layer(embed_dim)
 
-        ####### A easy way to implement weighted mean
+        ## A easy way to implement weighted mean
         # self.weighted_mean = torch.nn.Conv1d(in_channels=num_frame, out_channels=num_frame, kernel_size=1)
 
         self.head = nn.Sequential(
@@ -584,9 +722,9 @@ class  MixSTE2(nn.Module):
 
 
     def STE_forward(self, x):
-        b, f, n, c = x.shape  ##### b is batch size, f is number of frames, n is number of joints, c is channel size?
-        x = rearrange(x, 'b f n c  -> (b f) n c', )
-        ### now x is [batch_size, receptive frames, joint_num, 2 channels]
+        b, f, n, c = x.shape  ### b is batch size, f is number of frames, n is number of joints, c is channel size?
+        x = rearrange(x, 'b f n c  -> (b f) n c', ) 
+        ### Now x is [batch_size, receptive frames, joint_num, 2 channels]
         x = self.Spatial_patch_to_embedding(x)
         # x = rearrange(x, 'bnew c n  -> bnew n c', )
         x += self.Spatial_pos_embed
@@ -646,7 +784,7 @@ class  MixSTE2(nn.Module):
 
     def forward(self, x):
         b, f, n, c = x.shape
-        ### now x is [batch_size, 2 channels, receptive frames, joint_num], following image data
+        ### Now x is [batch_size, 2 channels, receptive frames, joint_num], following image data
         # x shape:(b f n c)
         # torch.cuda.synchronize()
         # st = time.time()
