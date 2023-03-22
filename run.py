@@ -269,7 +269,7 @@ if action_filter is not None:
 
 cameras_valid, poses_valid, poses_valid_2d = fetch(subjects_test, action_filter)
 
-# set receptive_field as number assigned
+# Set receptive_field as number assigned
 receptive_field = args.number_of_frames
 print('INFO: Receptive field: {} frames'.format(receptive_field))
 if not args.nolog:
