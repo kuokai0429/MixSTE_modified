@@ -298,7 +298,7 @@ class ProbAttention(nn.Module):
         # else:
         #     return context
 
-# 2023.0322 MetaFormer @paper
+# 2023.0322 MetaFormer @Paper
 class Pooling(nn.Module):
     """
     Implementation of pooling for PoolFormer
@@ -312,7 +312,7 @@ class Pooling(nn.Module):
     def forward(self, x):
         return self.pool(x) - x
 
-# 2023.0322 MetaFormer @paper
+# 2023.0322 MetaFormer @Paper
 class SpatialFc(nn.Module):
     """SpatialFc module that take features with shape of (B,C,*) as input.
     """
@@ -336,7 +336,7 @@ class SpatialFc(nn.Module):
         x = x.reshape(*shape) # [B, C, H, W]
         return x
 
-# 2023.0322 MetaFormer @paper
+# 2023.0322 MetaFormer @Paper
 class MetaFormerBlock(nn.Module):
     """
     Implementation of one MetaFormer block.
@@ -393,7 +393,7 @@ class MetaFormerBlock(nn.Module):
             x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
     
-# 2023.0322 PoolFormerBlock @paper
+# 2023.0322 PoolFormerBlock @Paper
 # class PoolFormerBlock(nn.Module):
 #     """
 #     Implementation of one PoolFormer block.
@@ -445,7 +445,7 @@ class MetaFormerBlock(nn.Module):
 #             x = x + self.drop_path(self.mlp(self.norm2(x)))
 #         return x
     
-# 2023.0322 PoolFormerBlock Encoder Pre-LN revised by @Brian
+# 2023.0322 PoolFormerBlock Encoder Pre-LN @Brian
 class PoolFormerBlock(nn.Module):
 
     def __init__(self, dim, pool_size=3, mlp_ratio=4., 
@@ -491,7 +491,7 @@ class PoolFormerBlock(nn.Module):
             x = rearrange(x, 'b c t -> b t c')
         return x
     
-# 20230320 Attention Block Encoder Post-LN @Brian
+# 2023.0320 Attention Block Encoder Post-LN @Brian
 # class Block(nn.Module):
 
 #     def __init__(self, dim, num_heads, mlp_ratio=4., 
@@ -538,7 +538,7 @@ class PoolFormerBlock(nn.Module):
 #             x = rearrange(x, 'b c t -> b t c')
 #         return x
 
-# 20230320 Attention Block Encoder Pre-LN @Brian
+# 2023.0320 Attention Block Encoder Pre-LN @Brian
 class Block(nn.Module):
 
     def __init__(self, dim, num_heads, mlp_ratio=4., attention=Attention, qkv_bias=False, qk_scale=None, drop=0., attn_drop=0.,
@@ -680,7 +680,7 @@ class  MixSTE2(nn.Module):
 
         ################################################################
 
-        ## Attention Block @MixSTE
+        ## 2023.0322 Attention Block @Paper
 
         self.STEblocks = nn.ModuleList([
             Block(

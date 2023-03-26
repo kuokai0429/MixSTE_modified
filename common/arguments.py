@@ -8,7 +8,11 @@
 import argparse
 
 def parse_args():
+    
     parser = argparse.ArgumentParser(description='Training script')
+
+    # 2023.0322 Evaluate on Custom Input Video @Brian
+    parser.add_argument('--custom_2d', action='store_true', help='Inference and evaluate on custom input video.')
 
     # General arguments
     parser.add_argument('-d', '--dataset', default='h36m', type=str, metavar='NAME', help='target dataset') # h36m or humaneva

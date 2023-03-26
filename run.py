@@ -50,11 +50,12 @@ torch.backends.cudnn.benchmark = False
 # print("start debuging")
 # joints_errs = []
 
+# 2023.0322 Coco to h36m @Brian
 ######################################## Coco to h36m
+
 h36m_coco_order = [9, 11, 14, 12, 15, 13, 16, 4, 1, 5, 2, 6, 3]
 coco_order = [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 spple_keypoints = [10, 8, 0, 7]
-
 
 def coco_h36m(keypoints):
     # keypoints: (T, N, 2) or (M, N, 2)
@@ -154,7 +155,9 @@ keypoints = np.load('data/data_2d_' + args.dataset + '_' + args.keypoints + '.np
 keypoints_metadata = keypoints['metadata'].item()
 # keypoints_symmetry = keypoints_metadata['keypoints_symmetry']
 
-# 2023.0322 Coco to H36M @Brian
+####################################################
+
+# 2023.0322 Coco to h36M @Brian
 keypoints_symmetry = [
     [4, 5, 6, 11, 12, 13],
     [1, 2, 3, 14, 15, 16],
@@ -164,7 +167,7 @@ kps_left, kps_right = list(keypoints_symmetry[0]), list(keypoints_symmetry[1])
 joints_left, joints_right = list(dataset.skeleton().joints_left()), list(dataset.skeleton().joints_right())
 keypoints = keypoints['positions_2d'].item()
 
-# 2023.0322 Coco to H36M @Brian
+# 2023.0322 Coco to h36M @Brian
 if keypoints_metadata['keypoints_symmetry'] != keypoints_symmetry:
     print("Translate coco to h36m...")
     kps_coco_2d =keypoints['myvideos.mp4']['custom'][0]
@@ -304,7 +307,7 @@ print('INFO: Trainable parameter count:', model_params/1000000, 'Million')
 if not args.nolog:
     writer.add_text(args.log+'_'+TIMESTAMP + '/Trainable parameter count', str(model_params/1000000) + ' Million')
 
-# make model parallel
+# Make model parallel
 if torch.cuda.is_available():
     model_pos = nn.DataParallel(model_pos)
     model_pos = model_pos.cuda()
@@ -371,6 +374,35 @@ def eval_data_prepare(receptive_field, inputs_2d, inputs_3d):
 
     return eval_input_2d, eval_input_3d
 
+# 2023.0322 Coco to H36M @Brian
+#####################################################
+
+def eval_data_prepare_2d(receptive_field, inputs_2d):
+
+    inputs_2d_p = torch.squeeze(inputs_2d)
+
+    if inputs_2d_p.shape[0] / receptive_field > inputs_2d_p.shape[0] // receptive_field: 
+        out_num = inputs_2d_p.shape[0] // receptive_field+1
+    elif inputs_2d_p.shape[0] / receptive_field == inputs_2d_p.shape[0] // receptive_field:
+        out_num = inputs_2d_p.shape[0] // receptive_field
+
+    eval_input_2d = torch.empty(out_num, receptive_field, inputs_2d_p.shape[1], inputs_2d_p.shape[2])
+
+    for i in range(out_num-1):
+        eval_input_2d[i,:,:,:] = inputs_2d_p[i*receptive_field:i*receptive_field+receptive_field,:,:]
+        
+    if inputs_2d_p.shape[0] < receptive_field:
+        from torch.nn import functional as F
+        pad_right = receptive_field-inputs_2d_p.shape[0]
+        inputs_2d_p = rearrange(inputs_2d_p, 'b f c -> f c b')
+        inputs_2d_p = F.pad(inputs_2d_p, (0,pad_right), mode='replicate')
+        # inputs_2d_p = np.pad(inputs_2d_p, ((0, receptive_field-inputs_2d_p.shape[0]), (0, 0), (0, 0)), 'edge')
+        inputs_2d_p = rearrange(inputs_2d_p, 'f c b -> b f c')
+    
+    eval_input_2d[-1,:,:,:] = inputs_2d_p[-receptive_field:,:,:]
+    
+    return eval_input_2d
+
 #####################################################
 
 # Training start
@@ -389,7 +421,7 @@ if not args.evaluate:
     initial_momentum = 0.1
     final_momentum = 0.001
 
-    # get training data
+    ### Get training data
     
     # train_generator = ChunkedGenerator_Seq(args.batch_size//args.stride, cameras_train, poses_train, poses_train_2d, args.stride,
     #                                    pad=pad, causal_shift=causal_shift, shuffle=True, augment=args.data_augmentation,
@@ -399,7 +431,9 @@ if not args.evaluate:
                                        kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right)
     train_generator_eval = UnchunkedGenerator_Seq(cameras_train, poses_train, poses_train_2d,
                                               pad=pad, causal_shift=causal_shift, augment=False)
+    
     print('INFO: Training on {} frames'.format(train_generator_eval.num_frames()))
+
     if not args.nolog:
         writer.add_text(args.log+'_'+TIMESTAMP + '/Training Frames', str(train_generator_eval.num_frames()))
 
@@ -418,7 +452,7 @@ if not args.evaluate:
 
     print("------------------------------- Start Training -------------------------------")
 
-    # Pos model only
+    ### Pos model only
     while epoch < args.epochs:
 
         # print("------------------------------- Epochs Interval -------------------------------")
@@ -439,8 +473,10 @@ if not args.evaluate:
 
             # if notrain:break
             # notrain=True
+
             if cameras_train is not None:
                 cameras_train = torch.from_numpy(cameras_train.astype('float32'))
+
             inputs_3d = torch.from_numpy(batch_3d.astype('float32'))
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
 
@@ -449,17 +485,19 @@ if not args.evaluate:
                 inputs_2d = inputs_2d.cuda()
                 if cameras_train is not None:
                     cameras_train = cameras_train.cuda()
+
             inputs_traj = inputs_3d[:, :, :1].clone()
             inputs_3d[:, :, 0] = 0
 
             optimizer.zero_grad()
 
-            # Predict 3D poses
+            ### Predict 3D poses
             predicted_3d_pos = model_pos_train(inputs_2d)
 
             # del inputs_2d
             # torch.cuda.empty_cache()
-            ### weight mpjpe
+
+            ### Weight mpjpe
             if args.dataset=='h36m':
                 # # hrdet
                 # w_mpjpe = torch.tensor([1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4]).cuda()
@@ -468,12 +506,13 @@ if not args.evaluate:
             
             elif args.dataset=='humaneva15':
                 w_mpjpe = torch.tensor([1, 1, 2.5, 2.5, 1, 2.5, 2.5, 1, 1.5, 1.5, 4, 4, 1.5, 4, 4]).cuda()
+
             loss_3d_pos = weighted_mpjpe(predicted_3d_pos, inputs_3d, w_mpjpe)
             # loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
             # loss_3d_pos = cl_wmpjpe_switch(predicted_3d_pos, inputs_3d, w_mpjpe, epoch, args.epochs, minw=0.1, maxw=2.0)
             # loss_3d_pos = cl_wmpjpe(predicted_3d_pos, inputs_3d, w_mpjpe, epoch, iter_num=args.epochs, switch_iter=10)
 
-            # Temporal Consistency Loss
+            ### Temporal Consistency Loss
             dif_seq = predicted_3d_pos[:,1:,:,:] - predicted_3d_pos[:,:-1,:,:]
             weights_joints = torch.ones_like(dif_seq).cuda()
             weights_mul = w_mpjpe
@@ -495,10 +534,10 @@ if not args.evaluate:
             #                     norm_loss_2(predicted_3d_pos, inputs_3d) + \
             #                     norm_loss_3(predicted_3d_pos, inputs_3d))
 
-            ### bone length consistency loss
+            ### Bone length consistency loss
             # loss_bone = bonelen_consistency_loss(args.dataset, args.dataset, predicted_3d_pos)
 
-            ### sym penalty loss
+            ### Sym penalty loss
             # loss_sym = sym_penalty(args.dataset, args.keypoints, predicted_3d_pos)
 
             # loss_total = (loss_3d_pos[:,1:] + loss_diff)
@@ -520,7 +559,7 @@ if not args.evaluate:
 
         # print("------------------------------------ 463 -------------------------------------")
 
-        # End-of-epoch evaluation
+        ### End-of-epoch evaluation
         with torch.no_grad():
             model_pos.load_state_dict(model_pos_train.state_dict(), strict=False)
             model_pos.eval()
@@ -530,18 +569,20 @@ if not args.evaluate:
             epoch_loss_2d_valid = 0
             epoch_loss_3d_vel = 0
             N = 0
+
             if not args.no_eval:
-                # Evaluate on test set
+
+                ### Evaluate on test set
                 for cam, batch, batch_2d in test_generator.next_epoch():
                     inputs_3d = torch.from_numpy(batch.astype('float32'))
                     inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
 
-                    ##### apply test-time-augmentation (following Videopose3d)
+                    ##### Apply test-time-augmentation (following Videopose3d)
                     inputs_2d_flip = inputs_2d.clone()
                     inputs_2d_flip[:, :, :, 0] *= -1
                     inputs_2d_flip[:, :, kps_left + kps_right, :] = inputs_2d_flip[:, :, kps_right + kps_left, :]
 
-                    ##### convert size
+                    ##### Convert size
                     inputs_3d_p = inputs_3d
                     inputs_2d, inputs_3d = eval_data_prepare(receptive_field, inputs_2d, inputs_3d_p)
                     inputs_2d_flip, _ = eval_data_prepare(receptive_field, inputs_2d_flip, inputs_3d_p)
@@ -566,7 +607,7 @@ if not args.evaluate:
                     # del inputs_2d, inputs_2d_flip
                     # torch.cuda.empty_cache()
 
-                    # set root as zero
+                    ### Set root as zero
                     # predicted_3d_pos[:, :, 0] = 0
                     loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
                     epoch_loss_3d_valid += inputs_3d.shape[0] * inputs_3d.shape[1] * loss_3d_pos.item()
@@ -582,14 +623,14 @@ if not args.evaluate:
                 losses_3d_valid.append(epoch_loss_3d_valid / N)
                 epoch_loss_3d_vel = epoch_loss_3d_vel/N
 
-                # Evaluate on training set, this time in evaluation mode
+                ### Evaluate on training set, this time in evaluation mode
                 epoch_loss_3d_train_eval = 0
                 epoch_loss_traj_train_eval = 0
                 epoch_loss_2d_train_labeled_eval = 0
                 N = 0
                 for cam, batch, batch_2d in train_generator_eval.next_epoch():
                     if batch_2d.shape[1] == 0:
-                        # This can only happen when downsampling the dataset
+                        ### This can only happen when downsampling the dataset
                         continue
 
                     inputs_3d = torch.from_numpy(batch.astype('float32'))
@@ -602,13 +643,13 @@ if not args.evaluate:
 
                     inputs_3d[:, :, 0] = 0
 
-                    # Compute 3D poses
+                    ### Compute 3D poses
                     predicted_3d_pos = model_pos(inputs_2d)
 
                     # del inputs_2d
                     # torch.cuda.empty_cache()
                     
-                    # set root as zero
+                    ### Set root as zero
                     # predicted_3d_pos[:, :, 0] = 0
                     loss_3d_pos = mpjpe(predicted_3d_pos, inputs_3d)
                     epoch_loss_3d_train_eval += inputs_3d.shape[0] * inputs_3d.shape[1] * loss_3d_pos.item()
@@ -619,7 +660,7 @@ if not args.evaluate:
 
                 losses_3d_train_eval.append(epoch_loss_3d_train_eval / N)
 
-                # Evaluate 2D loss on unlabeled training set (in evaluation mode)
+                ### Evaluate 2D loss on unlabeled training set (in evaluation mode)
                 epoch_loss_2d_train_unlabeled_eval = 0
                 N_semi = 0
 
@@ -642,24 +683,27 @@ if not args.evaluate:
                 losses_3d_train_eval[-1] * 1000,
                 losses_3d_valid[-1] * 1000,
                 epoch_loss_3d_vel * 1000))
+            
             if not args.nolog:
                 writer.add_scalar("Loss/3d training eval loss", losses_3d_train_eval[-1] * 1000, epoch+1)
                 writer.add_scalar("Loss/3d validation loss", losses_3d_valid[-1] * 1000, epoch+1)
+
         if not args.nolog:
             writer.add_scalar("Loss/3d training loss", losses_3d_train[-1] * 1000, epoch+1)
             writer.add_scalar("Parameters/learing rate", lr, epoch+1)
             writer.add_scalar('Parameters/training time per epoch', elapsed, epoch+1)
-        # Decay learning rate exponentially
+
+        ### Decay learning rate exponentially
         lr *= lr_decay
         for param_group in optimizer.param_groups:
             param_group['lr'] *= lr_decay
         epoch += 1
 
-        # Decay BatchNorm momentum
+        ### Decay BatchNorm momentum
         # momentum = initial_momentum * np.exp(-epoch/args.epochs * np.log(initial_momentum/final_momentum))
         # model_pos_train.set_bn_momentum(momentum)
 
-        # Save checkpoint if necessary
+        ### Save checkpoint if necessary
         if epoch % args.checkpoint_frequency == 0:
 
             chk_path = os.path.join(args.checkpoint, 'epoch_{}.bin'.format(epoch))
@@ -676,9 +720,10 @@ if not args.evaluate:
                 # 'random_state_semi': semi_generator.random_state() if semi_supervised else None,
             }, chk_path)
 
-        #### save best checkpoint
+        #### Save best checkpoint
         best_chk_path = os.path.join(args.checkpoint, 'best_epoch.bin'.format(epoch))
         # min_loss = 41.65
+
         if losses_3d_valid[-1] * 1000 < min_loss:
             min_loss = losses_3d_valid[-1] * 1000
             print("save best checkpoint")
@@ -692,7 +737,7 @@ if not args.evaluate:
                 # 'random_state_semi': semi_generator.random_state() if semi_supervised else None,
             }, best_chk_path)
 
-        # Save training curves after every epoch, as .png images (if requested)
+        ### Save training curves after every epoch, as .png images (if requested)
         if args.export_training_curves and epoch > 3:
 
             plt.figure()
@@ -710,15 +755,18 @@ if not args.evaluate:
 
     print("------------------------------- End of Training -------------------------------")
 
-# Training end
+### Training end
 
-# Evaluate
+### Evaluate
 def evaluate(test_generator, action=None, return_predictions=False, use_trajectory_model=False, newmodel=None):
+
     epoch_loss_3d_pos = 0
     epoch_loss_3d_pos_procrustes = 0
     epoch_loss_3d_pos_scale = 0
     epoch_loss_3d_vel = 0
+
     with torch.no_grad():
+
         if newmodel is not None:
             print('Loading comparison model')
             model_eval = newmodel
@@ -727,6 +775,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
             checkpoint = torch.load(chk_file_path, map_location=lambda storage, loc: storage)
             model_eval.load_state_dict(checkpoint['model_pos'], strict=False)
             model_eval.eval()
+
         else:
             model_eval = model_pos
             if not use_trajectory_model:
@@ -744,74 +793,114 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 model_eval.eval()
         # else:
             # model_traj.eval()
+
         N = 0
         for _, batch, batch_2d in test_generator.next_epoch():
 
-            # 2023.0322 Coco to H36M @Brian
-            ###############################
+            ###########################################################################################################################
 
-
-
-            ###############################
-
-            inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
-            inputs_3d = torch.from_numpy(batch.astype('float32'))
-
-
-            ##### apply test-time-augmentation (following Videopose3d)
-            inputs_2d_flip = inputs_2d.clone()
-            inputs_2d_flip [:, :, :, 0] *= -1
-            inputs_2d_flip[:, :, kps_left + kps_right,:] = inputs_2d_flip[:, :, kps_right + kps_left,:]
-
-            ##### convert size
-            inputs_3d_p = inputs_3d
-            if newmodel is not None:
-                def eval_data_prepare_pf(receptive_field, inputs_2d, inputs_3d):
-                    inputs_2d_p = torch.squeeze(inputs_2d)
-                    inputs_3d_p = inputs_3d.permute(1,0,2,3)
-                    padding = int(receptive_field//2)
-                    inputs_2d_p = rearrange(inputs_2d_p, 'b f c -> f c b')
-                    inputs_2d_p = F.pad(inputs_2d_p, (padding,padding), mode='replicate')
-                    inputs_2d_p = rearrange(inputs_2d_p, 'f c b -> b f c')
-                    out_num = inputs_2d_p.shape[0] - receptive_field + 1
-                    eval_input_2d = torch.empty(out_num, receptive_field, inputs_2d_p.shape[1], inputs_2d_p.shape[2])
-                    for i in range(out_num):
-                        eval_input_2d[i,:,:,:] = inputs_2d_p[i:i+receptive_field, :, :]
-                    return eval_input_2d, inputs_3d_p
+            if args.custom_2d:
                 
-                inputs_2d, inputs_3d = eval_data_prepare_pf(81, inputs_2d, inputs_3d_p)
-                inputs_2d_flip, _ = eval_data_prepare_pf(81, inputs_2d_flip, inputs_3d_p)
-            else:
-                inputs_2d, inputs_3d = eval_data_prepare(receptive_field, inputs_2d, inputs_3d_p)
-                inputs_2d_flip, _ = eval_data_prepare(receptive_field, inputs_2d_flip, inputs_3d_p)
+                # 2023.0327 Evaluate on Custom Input Video @Brian
 
-            # if newmodel is not None:
-            #     bi, ti, ni, _ = inputs_2d.shape
-            #     inputs_2d = inputs_2d.reshape(int(bi*3), int(ti/3), ni, -1)
-            #     inputs_3d = inputs_3d.reshape(int(bi*3), int(ti/3), ni, -1)
-            #     inputs_2d_flip = inputs_2d_flip.reshape(int(bi*3), int(ti/3), ni, -1)
+                print(type(batch), type(batch_2d)) 
 
-            if torch.cuda.is_available():
+                inputs_2d = torch.from_numpy(batch_2d.astype('float32')) # ([1, 1019, 17, 2])
                 inputs_2d = inputs_2d.cuda()
-                inputs_2d_flip = inputs_2d_flip.cuda()
-                inputs_3d = inputs_3d.cuda()
                 
-            inputs_3d[:, :, 0] = 0
+                inputs_2d_flip = inputs_2d.clone()
+                inputs_2d_flip [:, :, :, 0] *= -1
+                inputs_2d_flip[:, :, kps_left + kps_right,:] = inputs_2d_flip[:, :, kps_right + kps_left,:]
+                
+                #### Convert size
+                inputs_2d = eval_data_prepare_2d(receptive_field, inputs_2d) # ([1017, 3, 17, 2])
+                inputs_2d_flip = eval_data_prepare_2d(receptive_field, inputs_2d_flip) 
+                
+                if torch.cuda.is_available():
+                    inputs_2d = inputs_2d.cuda()
+                    inputs_2d_flip = inputs_2d_flip.cuda()
+                
+                predicted_3d_pos = model_pos(inputs_2d)  # ([1017, 1, 17, 3])
+                predicted_3d_pos_flip = model_pos(inputs_2d_flip)  # ([1017, 1, 17, 3])
+                predicted_3d_pos_flip[:, :, :, 0] *= -1
+                predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
+                                                                        joints_right + joints_left]  # ([1017, 1, 17, 3])
+
+                predicted_3d_pos = torch.mean(torch.cat((predicted_3d_pos, predicted_3d_pos_flip), dim=1), dim=1, 
+                                            keepdim=True) # ([1017, 1, 17, 3])
+                
+                del inputs_2d, inputs_2d_flip
+                torch.cuda.empty_cache()
             
-            predicted_3d_pos = model_eval(inputs_2d)
-            predicted_3d_pos_flip = model_eval(inputs_2d_flip)
-            predicted_3d_pos_flip[:, :, :, 0] *= -1
-            predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
-                                                                      joints_right + joints_left]
-            for i in range(predicted_3d_pos.shape[0]):
-                predicted_3d_pos[i,:,:,:] = (predicted_3d_pos[i,:,:,:] + predicted_3d_pos_flip[i,:,:,:])/2
-            # predicted_3d_pos = torch.mean(torch.cat((predicted_3d_pos, predicted_3d_pos_flip), dim=1), dim=1, keepdim=True)
+                if return_predictions:
+                    return predicted_3d_pos.squeeze(1).cpu().numpy()
+                
+            else: 
+                
+                # 2023.0327 Evaluate on Human3.6M @Paper
 
-            # del inputs_2d, inputs_2d_flip
-            # torch.cuda.empty_cache()
+                print(type(batch), type(batch_2d))
 
-            if return_predictions:
-                return predicted_3d_pos.squeeze().cpu().numpy()
+                inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
+                inputs_3d = torch.from_numpy(batch.astype('float32'))
+
+                ##### Apply test-time-augmentation (following Videopose3d)
+                inputs_2d_flip = inputs_2d.clone()
+                inputs_2d_flip [:, :, :, 0] *= -1
+                inputs_2d_flip[:, :, kps_left + kps_right,:] = inputs_2d_flip[:, :, kps_right + kps_left,:]
+
+                ##### Convert size
+                inputs_3d_p = inputs_3d
+                if newmodel is not None:
+                    def eval_data_prepare_pf(receptive_field, inputs_2d, inputs_3d):
+                        inputs_2d_p = torch.squeeze(inputs_2d)
+                        inputs_3d_p = inputs_3d.permute(1,0,2,3)
+                        padding = int(receptive_field//2)
+                        inputs_2d_p = rearrange(inputs_2d_p, 'b f c -> f c b')
+                        inputs_2d_p = F.pad(inputs_2d_p, (padding,padding), mode='replicate')
+                        inputs_2d_p = rearrange(inputs_2d_p, 'f c b -> b f c')
+                        out_num = inputs_2d_p.shape[0] - receptive_field + 1
+                        eval_input_2d = torch.empty(out_num, receptive_field, inputs_2d_p.shape[1], inputs_2d_p.shape[2])
+                        for i in range(out_num):
+                            eval_input_2d[i,:,:,:] = inputs_2d_p[i:i+receptive_field, :, :]
+                        return eval_input_2d, inputs_3d_p
+                    
+                    inputs_2d, inputs_3d = eval_data_prepare_pf(81, inputs_2d, inputs_3d_p)
+                    inputs_2d_flip, _ = eval_data_prepare_pf(81, inputs_2d_flip, inputs_3d_p)
+                else:
+                    inputs_2d, inputs_3d = eval_data_prepare(receptive_field, inputs_2d, inputs_3d_p)
+                    inputs_2d_flip, _ = eval_data_prepare(receptive_field, inputs_2d_flip, inputs_3d_p)
+
+                # if newmodel is not None:
+                #     bi, ti, ni, _ = inputs_2d.shape
+                #     inputs_2d = inputs_2d.reshape(int(bi*3), int(ti/3), ni, -1)
+                #     inputs_3d = inputs_3d.reshape(int(bi*3), int(ti/3), ni, -1)
+                #     inputs_2d_flip = inputs_2d_flip.reshape(int(bi*3), int(ti/3), ni, -1)
+
+                if torch.cuda.is_available():
+                    inputs_2d = inputs_2d.cuda()
+                    inputs_2d_flip = inputs_2d_flip.cuda()
+                    inputs_3d = inputs_3d.cuda()
+                    
+                inputs_3d[:, :, 0] = 0
+                
+                predicted_3d_pos = model_eval(inputs_2d)
+                predicted_3d_pos_flip = model_eval(inputs_2d_flip)
+                predicted_3d_pos_flip[:, :, :, 0] *= -1
+                predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
+                                                                        joints_right + joints_left]
+                for i in range(predicted_3d_pos.shape[0]):
+                    predicted_3d_pos[i,:,:,:] = (predicted_3d_pos[i,:,:,:] + predicted_3d_pos_flip[i,:,:,:])/2
+                # predicted_3d_pos = torch.mean(torch.cat((predicted_3d_pos, predicted_3d_pos_flip), dim=1), dim=1, keepdim=True)
+
+                # del inputs_2d, inputs_2d_flip
+                # torch.cuda.empty_cache()
+
+                if return_predictions:
+                    return predicted_3d_pos.squeeze().cpu().numpy()
+                
+            ###########################################################################################################################
+                
 
             error = mpjpe(predicted_3d_pos, inputs_3d)
 
@@ -828,7 +917,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
 
             epoch_loss_3d_pos_procrustes += inputs_3d.shape[0]*inputs_3d.shape[1] * p_mpjpe(predicted_3d_pos, inputs)
 
-            # Compute velocity error
+            ### Compute velocity error
             epoch_loss_3d_vel += inputs_3d.shape[0]*inputs_3d.shape[1] * mean_velocity_error(predicted_3d_pos, inputs)
 
     if action is None:
@@ -853,16 +942,21 @@ if args.render:
 
     input_keypoints = keypoints[args.viz_subject][args.viz_action][args.viz_camera].copy()
     ground_truth = None
+
     if args.viz_subject in dataset.subjects() and args.viz_action in dataset[args.viz_subject]:
         if 'positions_3d' in dataset[args.viz_subject][args.viz_action]:
             ground_truth = dataset[args.viz_subject][args.viz_action]['positions_3d'][args.viz_camera].copy()
+
     if ground_truth is None:
         print('INFO: this action is unlabeled. Ground truth will not be rendered.')
 
     gen = UnchunkedGenerator_Seq(None, [ground_truth], [input_keypoints],
                              pad=pad, causal_shift=causal_shift, augment=args.test_time_augmentation,
                              kps_left=kps_left, kps_right=kps_right, joints_left=joints_left, joints_right=joints_right)
+    
     prediction = evaluate(gen, return_predictions=True)
+    print("Rendering prediction :" , np.shape(prediction))
+
     if args.compare:
         from common.model_poseformer import PoseTransformer
         model_pf = PoseTransformer(num_frame=81, num_joints=17, in_chans=2, num_heads=8, mlp_ratio=2., qkv_bias=False, qk_scale=None,drop_path_rate=0.1)
@@ -871,7 +965,7 @@ if args.render:
             model_pf = model_pf.cuda()
         prediction_pf = evaluate(gen, newmodel=model_pf, return_predictions=True)
         
-        # ### reshape prediction_pf as ground truth
+        # ### Reshape prediction_pf as ground truth
         # if ground_truth.shape[0] / receptive_field > ground_truth.shape[0] // receptive_field: 
         #     batch_num = (ground_truth.shape[0] // receptive_field) +1
         #     prediction_pf_2 = np.empty_like(ground_truth)
@@ -886,33 +980,42 @@ if args.render:
     # if model_traj is not None and ground_truth is None:
     #     prediction_traj = evaluate(gen, return_predictions=True, use_trajectory_model=True)
     #     prediction += prediction_traj
-    ### reshape prediction as ground truth
-    if ground_truth.shape[0] / receptive_field > ground_truth.shape[0] // receptive_field: 
-        batch_num = (ground_truth.shape[0] // receptive_field) +1
-        prediction2 = np.empty_like(ground_truth)
-        for i in range(batch_num-1):
-            prediction2[i*receptive_field:(i+1)*receptive_field,:,:] = prediction[i,:,:,:]
-        left_frames = ground_truth.shape[0] - (batch_num-1)*receptive_field
-        prediction2[-left_frames:,:,:] = prediction[-1,-left_frames:,:,:]
-        prediction = prediction2
-    elif ground_truth.shape[0] / receptive_field == ground_truth.shape[0] // receptive_field:
-        prediction.reshape(ground_truth.shape[0], 17, 3)
+
+
+    # 2023.0327 @Brian
+    ################################################################
+
+    ### Reshape prediction as ground truth
+    if ground_truth is not None:
+        if ground_truth.shape[0] / receptive_field > ground_truth.shape[0] // receptive_field: 
+            batch_num = (ground_truth.shape[0] // receptive_field) +1
+            prediction2 = np.empty_like(ground_truth)
+            for i in range(batch_num-1):
+                prediction2[i*receptive_field:(i+1)*receptive_field,:,:] = prediction[i,:,:,:]
+            left_frames = ground_truth.shape[0] - (batch_num-1)*receptive_field
+            prediction2[-left_frames:,:,:] = prediction[-1,-left_frames:,:,:]
+            prediction = prediction2
+
+        elif ground_truth.shape[0] / receptive_field == ground_truth.shape[0] // receptive_field:
+            prediction.reshape(ground_truth.shape[0], 17, 3)
+
+    ################################################################
 
     if args.viz_export is not None:
         print('Exporting joint positions to', args.viz_export)
-        # Predictions are in camera space
+        ### Predictions are in camera space
         np.save(args.viz_export, prediction)
 
     if args.viz_output is not None:
         if ground_truth is not None:
-            # Reapply trajectory
+            ### Reapply trajectory
             trajectory = ground_truth[:, :1]
             ground_truth[:, 1:] += trajectory
             prediction += trajectory
             if args.compare:
                 prediction_pf += trajectory
 
-        # Invert camera transformation
+        ### Invert camera transformation
         cam = dataset.cameras()[args.viz_subject][args.viz_camera]
         if ground_truth is not None:
             if args.compare:
@@ -920,8 +1023,8 @@ if args.render:
             prediction = camera_to_world(prediction, R=cam['orientation'], t=cam['translation'])
             ground_truth = camera_to_world(ground_truth, R=cam['orientation'], t=cam['translation'])
         else:
-            # If the ground truth is not available, take the camera extrinsic params from a random subject.
-            # They are almost the same, and anyway, we only need this for visualization purposes.
+            ### If the ground truth is not available, take the camera extrinsic params from a random subject.
+            ### They are almost the same, and anyway, we only need this for visualization purposes.
             for subject in dataset.cameras():
                 if 'orientation' in dataset.cameras()[subject][args.viz_camera]:
                     rot = dataset.cameras()[subject][args.viz_camera]['orientation']
@@ -930,7 +1033,7 @@ if args.render:
                 prediction_pf = camera_to_world(prediction_pf, R=rot, t=0)
                 prediction_pf[:, :, 2] -= np.min(prediction_pf[:, :, 2])
             prediction = camera_to_world(prediction, R=rot, t=0)
-            # We don't have the trajectory, but at least we can rebase the height
+            ### We don't have the trajectory, but at least we can rebase the height
             prediction[:, :, 2] -= np.min(prediction[:, :, 2])
         
         if args.compare:
@@ -946,6 +1049,8 @@ if args.render:
 
         input_keypoints = image_coordinates(input_keypoints[..., :2], w=cam['res_w'], h=cam['res_h'])
 
+        print("input_keypoints :", np.shape(input_keypoints))
+
         from common.visualization import render_animation
         render_animation(input_keypoints, keypoints_metadata, anim_output,
                         dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
@@ -954,6 +1059,7 @@ if args.render:
                         input_video_skip=args.viz_skip)
 
 else:
+
     print('Evaluating...')
     all_actions = {}
     all_actions_by_subject = {}
@@ -971,6 +1077,7 @@ else:
             all_actions_by_subject[subject][action_name].append((subject, action))
 
     def fetch_actions(actions):
+
         out_poses_3d = []
         out_poses_2d = []
 
@@ -986,7 +1093,7 @@ else:
 
         stride = args.downsample
         if stride > 1:
-            # Downsample as requested
+            ### Downsample as requested
             for i in range(len(out_poses_2d)):
                 out_poses_2d[i] = out_poses_2d[i][::stride]
                 if out_poses_3d is not None:
@@ -995,6 +1102,7 @@ else:
         return out_poses_3d, out_poses_2d
 
     def run_evaluation(actions, action_filter=None):
+
         errors_p1 = []
         errors_p2 = []
         errors_p3 = []
@@ -1043,5 +1151,6 @@ else:
             print('Evaluating on subject', subject)
             run_evaluation(all_actions_by_subject[subject], action_filter)
             print('')
+
 if not args.nolog:
     writer.close()
