@@ -678,6 +678,8 @@ class  MixSTE2(nn.Module):
         dpr = [x.item() for x in torch.linspace(0, drop_path_rate, depth)]  # stochastic depth decay rule
         self.block_depth = depth
 
+        ################################################################
+
         ## Attention Block @MixSTE
 
         self.STEblocks = nn.ModuleList([
@@ -707,8 +709,10 @@ class  MixSTE2(nn.Module):
         #         changedim=False, currentdim=i+1, depth=depth)
         #     for i in range(depth)])
 
-        # self.Spatial_norm = norm_layer(embed_dim_ratio)
-        # self.Temporal_norm = norm_layer(embed_dim)
+        ################################################################
+
+        self.Spatial_norm = norm_layer(embed_dim_ratio)
+        self.Temporal_norm = norm_layer(embed_dim)
 
         ## A easy way to implement weighted mean
         # self.weighted_mean = torch.nn.Conv1d(in_channels=num_frame, out_channels=num_frame, kernel_size=1)
