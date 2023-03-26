@@ -803,7 +803,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 
                 # 2023.0327 Evaluate on Custom Input Video @Brian
 
-                print(type(batch), type(batch_2d)) 
+                print("Batch: ", type(batch), "Batch_2d: ", type(batch_2d)) 
 
                 inputs_2d = torch.from_numpy(batch_2d.astype('float32')) # ([1, 1019, 17, 2])
                 inputs_2d = inputs_2d.cuda()
@@ -839,7 +839,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 
                 # 2023.0327 Evaluate on Human3.6M @Paper
 
-                print(type(batch), type(batch_2d))
+                print("Batch: ", type(batch), "Batch_2d: ", type(batch_2d)) 
 
                 inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
                 inputs_3d = torch.from_numpy(batch.astype('float32'))

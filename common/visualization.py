@@ -183,10 +183,16 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
             ax.set_xlim3d([-radius/2 + trajectories[n][i, 0], radius/2 + trajectories[n][i, 0]])
             ax.set_ylim3d([-radius/2 + trajectories[n][i, 1], radius/2 + trajectories[n][i, 1]])
 
-        # Update 2D poses
-        joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
+        # # Update 2D poses
+        # joints_right_2d = keypoints_metadata['keypoints_symmetry'][1]
+        # colors_2d = np.full(keypoints.shape[1], 'black')
+        # colors_2d[joints_right_2d] = 'red'
+
+        # 2023.0327 Update 2D Poses @Brian
+        joints_right_2d = [1, 2, 3, 14, 15, 16]                       
         colors_2d = np.full(keypoints.shape[1], 'black')
         colors_2d[joints_right_2d] = 'red'
+
         if not initialized:
             image = ax_in.imshow(all_frames[i], aspect='equal')
 
@@ -214,12 +220,13 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
             image.set_data(all_frames[i])
 
             for j, j_parent in enumerate(parents):
+
                 if j_parent == -1:
                     continue
 
                 if len(parents) == keypoints.shape[1] and keypoints_metadata['layout_name'] != 'coco':
                     lines[j-1][0].set_data([keypoints[i, j, 0], keypoints[i, j_parent, 0]],
-                                             [keypoints[i, j, 1], keypoints[i, j_parent, 1]])
+                                            [keypoints[i, j, 1], keypoints[i, j_parent, 1]])
 
                 # Plot 2D keypoints
                 for n, ax in enumerate(ax_3d):
@@ -227,10 +234,12 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
                     lines_3d[n][j-1][0].set_xdata(np.array([pos[j, 0], pos[j_parent, 0]]))
                     lines_3d[n][j-1][0].set_ydata(np.array([pos[j, 1], pos[j_parent, 1]]))
                     lines_3d[n][j-1][0].set_3d_properties(np.array([pos[j, 2], pos[j_parent, 2]]), zdir='z')
+            
             # Plot 2D keypoints
             points.set_offsets(keypoints[i])
 
-        print('{}/{}      '.format(i, limit), end='\r')
+        # print('{}/{}      '.format(i, limit), end='\r')
+        print('{}/{}      '.format(i, limit))
 
 
     fig.tight_layout()
