@@ -175,6 +175,8 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
     else:
         limit = min(limit, len(all_frames))
 
+    print("Trajectories: ", np.shape(trajectories))
+
     parents = skeleton.parents()
     def update_video(i):
         nonlocal initialized, image, lines, points

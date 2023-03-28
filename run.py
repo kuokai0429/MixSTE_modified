@@ -803,9 +803,9 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 
                 # 2023.0327 Evaluate on Custom Input Video @Brian
 
-                print("Batch: ", type(batch), "Batch_2d: ", type(batch_2d)) 
+                print("Batch: ", type(batch), " Batch_2d: ", type(batch_2d)) 
 
-                inputs_2d = torch.from_numpy(batch_2d.astype('float32')) # ([1, 1019, 17, 2])
+                inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
                 inputs_2d = inputs_2d.cuda()
                 
                 inputs_2d_flip = inputs_2d.clone()
@@ -813,33 +813,30 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 inputs_2d_flip[:, :, kps_left + kps_right,:] = inputs_2d_flip[:, :, kps_right + kps_left,:]
                 
                 #### Convert size
-                inputs_2d = eval_data_prepare_2d(receptive_field, inputs_2d) # ([1017, 3, 17, 2])
+                inputs_2d = eval_data_prepare_2d(receptive_field, inputs_2d)
                 inputs_2d_flip = eval_data_prepare_2d(receptive_field, inputs_2d_flip) 
                 
                 if torch.cuda.is_available():
                     inputs_2d = inputs_2d.cuda()
                     inputs_2d_flip = inputs_2d_flip.cuda()
                 
-                predicted_3d_pos = model_pos(inputs_2d)  # ([1017, 1, 17, 3])
-                predicted_3d_pos_flip = model_pos(inputs_2d_flip)  # ([1017, 1, 17, 3])
+                predicted_3d_pos = model_pos(inputs_2d)
+                predicted_3d_pos_flip = model_pos(inputs_2d_flip)
                 predicted_3d_pos_flip[:, :, :, 0] *= -1
                 predicted_3d_pos_flip[:, :, joints_left + joints_right] = predicted_3d_pos_flip[:, :,
-                                                                        joints_right + joints_left]  # ([1017, 1, 17, 3])
-
-                predicted_3d_pos = torch.mean(torch.cat((predicted_3d_pos, predicted_3d_pos_flip), dim=1), dim=1, 
-                                            keepdim=True) # ([1017, 1, 17, 3])
+                                                                        joints_right + joints_left]
                 
-                del inputs_2d, inputs_2d_flip
-                torch.cuda.empty_cache()
+                for i in range(predicted_3d_pos.shape[0]):
+                    predicted_3d_pos[i,:,:,:] = (predicted_3d_pos[i,:,:,:] + predicted_3d_pos_flip[i,:,:,:])/2
             
                 if return_predictions:
-                    return predicted_3d_pos.squeeze(1).cpu().numpy()
+                    return predicted_3d_pos.squeeze().cpu().numpy()
                 
             else: 
                 
                 # 2023.0327 Evaluate on Human3.6M @Paper
 
-                print("Batch: ", type(batch), "Batch_2d: ", type(batch_2d)) 
+                print("Batch: ", type(batch), " Batch_2d: ", type(batch_2d)) 
 
                 inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
                 inputs_3d = torch.from_numpy(batch.astype('float32'))
