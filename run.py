@@ -331,6 +331,9 @@ print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
 if not args.nolog:
     writer.add_text(args.log+'_'+TIMESTAMP + '/Testing Frames', str(test_generator.num_frames()))
 
+# 2023.0322 @Paper
+#####################################################
+
 def eval_data_prepare(receptive_field, inputs_2d, inputs_3d):
 
     # inputs_2d_p = torch.squeeze(inputs_2d)
