@@ -45,8 +45,8 @@ python run_poseformer.py -d custom -k myvideos -f 81 -c checkpoint --evaluate gt
 
 3. 模型訓練 Training
 
-python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99
-( python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 -b 256 )
+python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 --export-training-curves
+( python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 -b 256 --export-training-curves )
 
 
 
