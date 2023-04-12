@@ -25,11 +25,14 @@ from common.camera import *
 import collections
 
 from common.model_poseformer_dennis import *
-
-from common.loss import *
+from common.loss_poseformer import *
 from common.generators_poseformer import ChunkedGenerator, UnchunkedGenerator
+
 from time import time
+from datetime import datetime
 from common.utils import *
+from common.logging import Logger
+from torch.utils.tensorboard import SummaryWriter
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -75,6 +78,20 @@ def coco_h36m(keypoints):
 ###################
 args = parse_args()
 # print(args)
+
+# initial setting
+TIMESTAMP = "{0:%Y%m%dT%H-%M-%S/}".format(datetime.now())
+# tensorboard
+if not args.nolog:
+    print(args.log+'_'+TIMESTAMP)
+    writer = SummaryWriter(args.log+'_'+TIMESTAMP)
+    writer.add_text('command', 'python ' + ' '.join(sys.argv))
+    # logging setting
+    logfile = os.path.join(args.log+'_'+TIMESTAMP, 'logging.log')
+    sys.stdout = Logger(logfile)
+print('python ' + ' '.join(sys.argv))
+print("CUDA Device Count: ", torch.cuda.device_count())
+print(args)
 
 try:
     # Create checkpoint directory if it does not exist
@@ -229,6 +246,8 @@ cameras_valid, poses_valid, poses_valid_2d = fetch(subjects_test, action_filter)
 
 receptive_field = args.number_of_frames
 print('INFO: Receptive field: {} frames'.format(receptive_field))
+if not args.nolog:
+    writer.add_text(args.log+'_'+TIMESTAMP + '/Receptive field', str(receptive_field))
 pad = (receptive_field -1) // 2 # Padding on each side
 min_loss = 100000
 width = cam['res_w']
@@ -253,7 +272,9 @@ causal_shift = 0
 model_params = 0
 for parameter in model_pos.parameters():
     model_params += parameter.numel()
-print('INFO: Trainable parameter count:', model_params)
+print('INFO: Trainable parameter count:', model_params/1000000, 'Million')
+if not args.nolog:
+    writer.add_text(args.log+'_'+TIMESTAMP + '/Trainable parameter count', str(model_params/1000000) + ' Million')
 
 if torch.cuda.is_available():
     print('Cuda.is_available')
@@ -279,6 +300,8 @@ test_generator = UnchunkedGenerator(cameras_valid, poses_valid, poses_valid_2d,
 
 #################### 你丟的資料
 print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
+if not args.nolog:
+    writer.add_text(args.log+'_'+TIMESTAMP + '/Testing Frames', str(test_generator.num_frames()))
 
 ############ 小改一下
 
@@ -330,6 +353,8 @@ if not args.evaluate:
     train_generator_eval = UnchunkedGenerator(cameras_train, poses_train, poses_train_2d,
                                               pad=pad, causal_shift=causal_shift, augment=False)
     print('INFO: Training on {} frames'.format(train_generator_eval.num_frames()))
+    if not args.nolog:
+        writer.add_text(args.log+'_'+TIMESTAMP + '/Training Frames', str(train_generator_eval.num_frames()))
 
 
     if args.resume:
@@ -498,6 +523,15 @@ if not args.evaluate:
                 losses_3d_train[-1] * 1000,
                 losses_3d_train_eval[-1] * 1000,
                 losses_3d_valid[-1] * 1000))
+            
+            if not args.nolog:
+                writer.add_scalar("Loss/3d training eval loss", losses_3d_train_eval[-1] * 1000, epoch+1)
+                writer.add_scalar("Loss/3d validation loss", losses_3d_valid[-1] * 1000, epoch+1)
+
+        if not args.nolog:
+            writer.add_scalar("Loss/3d training loss", losses_3d_train[-1] * 1000, epoch+1)
+            writer.add_scalar("Parameters/learing rate", lr, epoch+1)
+            writer.add_scalar('Parameters/training time per epoch', elapsed, epoch+1)
 
         # Decay learning rate exponentially
         lr *= lr_decay
@@ -829,3 +863,6 @@ else:
             print('Evaluating on subject', subject)
             run_evaluation(all_actions_by_subject[subject], action_filter)
             print('')
+
+if not args.nolog:
+    writer.close()

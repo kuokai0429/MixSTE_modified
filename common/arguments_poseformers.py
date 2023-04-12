@@ -22,10 +22,13 @@ def parse_args():
                         help='actions to train/test on, separated by comma, or * for all')
     parser.add_argument('-c', '--checkpoint', default='checkpoint', type=str, metavar='PATH',
                         help='checkpoint directory')
+    parser.add_argument('-l', '--log', default='log/default', type=str, metavar='PATH',
+                        help='log file directory')
     parser.add_argument('--checkpoint-frequency', default=40, type=int, metavar='N',
                         help='create a checkpoint every N epochs')
     parser.add_argument('-r', '--resume', default='', type=str, metavar='FILENAME',
                         help='checkpoint to resume (file name)')
+    parser.add_argument('--nolog', action='store_true', help='forbiden log function')
     parser.add_argument('--evaluate', default='', type=str, metavar='FILENAME', help='checkpoint to evaluate (file name)')
     parser.add_argument('--render', action='store_true', help='visualize a particular video')
     parser.add_argument('--by-subject', action='store_true', help='break down error by subject (on evaluation)')
