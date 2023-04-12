@@ -1,3 +1,5 @@
+# Revised version @Brian
+
 # Copyright (c) 2018-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -7,7 +9,7 @@
 
 import numpy as np
 
-from common.arguments_test import parse_args
+from common.arguments_poseformer import parse_args
 import torch
 
 import torch.nn as nn
@@ -23,10 +25,10 @@ from copy import deepcopy
 
 from common.camera import *
 import collections
-from common.model_test import *
+from common.model_poseformer import *
 
-from common.loss_test import *
-from common.generators_test import ChunkedGenerator, UnchunkedGenerator
+from common.loss import *
+from common.generators import ChunkedGenerator, UnchunkedGenerator
 from time import time
 from common.utils import *
 from common.logging import Logger
@@ -256,10 +258,10 @@ num_joints = keypoints_metadata['num_joints']
 
 #########################################PoseTransformer
 
-model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=10,
+model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
 
-model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=10,
+model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
 
 ################ load weight ########################
@@ -612,6 +614,8 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
 # 要更改的地方  eval_data_prepare 要改就要全改可以用新增的函數改就好 eval_data_prepare_2d   /   eval_data_prepare_3d         input_3d 要在return 之後
 # ----------------------------------------------------------------------------------------------------------------------------------
             
+            print(type(batch), type(batch_2d))
+            
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))       # ([1, 1019, 17, 2])
             inputs_2d = inputs_2d.cuda()
             
@@ -769,7 +773,7 @@ if args.render:
         
         print("input_keypoints :",np.shape(input_keypoints))
   
-        from common.visualization_test import render_animation
+        from common.visualization_poseformer import render_animation
         render_animation(input_keypoints, keypoints_metadata, anim_output,
                          dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
                          limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size,
