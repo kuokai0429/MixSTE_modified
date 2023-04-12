@@ -769,7 +769,7 @@ if args.render:
         
         print("input_keypoints :",np.shape(input_keypoints))
   
-        from common.visualization import render_animation
+        from MixSTE_revised.common.visualization_poseformer_dennis import render_animation
         render_animation(input_keypoints, keypoints_metadata, anim_output,
                          dataset.skeleton(), dataset.fps(), args.viz_bitrate, cam['azimuth'], args.viz_output,
                          limit=args.viz_limit, downsample=args.viz_downsample, size=args.viz_size,

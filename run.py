@@ -958,7 +958,7 @@ if args.render:
     print("Rendering prediction :" , np.shape(prediction))
 
     if args.compare:
-        from common.model_poseformer import PoseTransformer
+        from common.model_poseformer_dennis import PoseTransformer
         model_pf = PoseTransformer(num_frame=81, num_joints=17, in_chans=2, num_heads=8, mlp_ratio=2., qkv_bias=False, qk_scale=None,drop_path_rate=0.1)
         if torch.cuda.is_available():
             model_pf = nn.DataParallel(model_pf)
