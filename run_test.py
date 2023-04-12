@@ -7,7 +7,7 @@
 
 import numpy as np
 
-from common.arguments_test import parse_args
+from common.arguments import parse_args
 import torch
 
 import torch.nn as nn
@@ -23,6 +23,7 @@ from copy import deepcopy
 
 from common.camera import *
 import collections
+
 from common.model_test import *
 
 from common.loss_test import *
@@ -75,7 +76,6 @@ def coco_h36m(keypoints):
     return keypoints_h36m
 
 ###################
-
 args = parse_args()
 # print(args)
 
@@ -142,9 +142,9 @@ keypoints = keypoints['positions_2d'].item()
 
 if keypoints_metadata['keypoints_symmetry'] != keypoints_symmetry:
     print("Translate coco to h36m...")
-    kps_coco_2d =keypoints['myvideos.mp4']['custom'][0]
+    kps_coco_2d =keypoints[args.keypoints + '.mp4']['custom'][0]
     coco_to_h36m = coco_h36m(kps_coco_2d)
-    keypoints['myvideos.mp4']['custom'][0] = coco_to_h36m
+    keypoints[args.keypoints + '.mp4']['custom'][0] = coco_to_h36m
 
 ###################
 for subject in dataset.subjects():
@@ -246,8 +246,6 @@ cameras_valid, poses_valid, poses_valid_2d = fetch(subjects_test, action_filter)
 
 receptive_field = args.number_of_frames
 print('INFO: Receptive field: {} frames'.format(receptive_field))
-if not args.nolog:
-    writer.add_text(args.log+'_'+TIMESTAMP + '/Receptive field', str(receptive_field))
 pad = (receptive_field -1) // 2 # Padding on each side
 min_loss = 100000
 width = cam['res_w']
@@ -256,14 +254,14 @@ num_joints = keypoints_metadata['num_joints']
 
 #########################################PoseTransformer
 
-model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=10,
+model_pos_train = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0.1)
 
-model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=10,
+model_pos = PoseTransformer(num_frame=receptive_field, num_joints=num_joints, in_chans=2, embed_dim_ratio=32, depth=4,
         num_heads=8, mlp_ratio=2., qkv_bias=True, qk_scale=None,drop_path_rate=0)
 
 ################ load weight ########################
-# posetrans_checkpoint = torch.load('./checkpoint/best_epoch.bin', map_location=lambda storage, loc: storage)
+# posetrans_checkpoint = torch.load('./checkpoint/pretrained_posetrans.bin', map_location=lambda storage, loc: storage)
 # posetrans_checkpoint = posetrans_checkpoint["model_pos"]
 # model_pos_train = load_pretrained_weights(model_pos_train, posetrans_checkpoint)
 
@@ -272,9 +270,7 @@ causal_shift = 0
 model_params = 0
 for parameter in model_pos.parameters():
     model_params += parameter.numel()
-print('INFO: Trainable parameter count:', model_params/1000000, 'Million')
-if not args.nolog:
-    writer.add_text(args.log+'_'+TIMESTAMP + '/Trainable parameter count', str(model_params/1000000) + ' Million')
+print('INFO: Trainable parameter count:', model_params)
 
 if torch.cuda.is_available():
     print('Cuda.is_available')
@@ -300,8 +296,6 @@ test_generator = UnchunkedGenerator(cameras_valid, poses_valid, poses_valid_2d,
 
 #################### 你丟的資料
 print('INFO: Testing on {} frames'.format(test_generator.num_frames()))
-if not args.nolog:
-    writer.add_text(args.log+'_'+TIMESTAMP + '/Testing Frames', str(test_generator.num_frames()))
 
 ############ 小改一下
 
@@ -353,8 +347,6 @@ if not args.evaluate:
     train_generator_eval = UnchunkedGenerator(cameras_train, poses_train, poses_train_2d,
                                               pad=pad, causal_shift=causal_shift, augment=False)
     print('INFO: Training on {} frames'.format(train_generator_eval.num_frames()))
-    if not args.nolog:
-        writer.add_text(args.log+'_'+TIMESTAMP + '/Training Frames', str(train_generator_eval.num_frames()))
 
 
     if args.resume:
@@ -523,15 +515,6 @@ if not args.evaluate:
                 losses_3d_train[-1] * 1000,
                 losses_3d_train_eval[-1] * 1000,
                 losses_3d_valid[-1] * 1000))
-            
-            if not args.nolog:
-                writer.add_scalar("Loss/3d training eval loss", losses_3d_train_eval[-1] * 1000, epoch+1)
-                writer.add_scalar("Loss/3d validation loss", losses_3d_valid[-1] * 1000, epoch+1)
-
-        if not args.nolog:
-            writer.add_scalar("Loss/3d training loss", losses_3d_train[-1] * 1000, epoch+1)
-            writer.add_scalar("Parameters/learing rate", lr, epoch+1)
-            writer.add_scalar('Parameters/training time per epoch', elapsed, epoch+1)
 
         # Decay learning rate exponentially
         lr *= lr_decay
@@ -612,6 +595,8 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
 # 要更改的地方  eval_data_prepare 要改就要全改可以用新增的函數改就好 eval_data_prepare_2d   /   eval_data_prepare_3d         input_3d 要在return 之後
 # ----------------------------------------------------------------------------------------------------------------------------------
             
+            print(type(batch), type(batch_2d))
+
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))       # ([1, 1019, 17, 2])
             inputs_2d = inputs_2d.cuda()
             
@@ -643,7 +628,7 @@ def evaluate(test_generator, action=None, return_predictions=False, use_trajecto
                 return predicted_3d_pos.squeeze(1).cpu().numpy()
             
 # 原本的---------------------------------------------------------------------------------------------------------------------------------- 塞到return 之後
-          
+            
             inputs_2d = torch.from_numpy(batch_2d.astype('float32'))
             inputs_3d = torch.from_numpy(batch.astype('float32'))
 
@@ -863,6 +848,3 @@ else:
             print('Evaluating on subject', subject)
             run_evaluation(all_actions_by_subject[subject], action_filter)
             print('')
-
-if not args.nolog:
-    writer.close()

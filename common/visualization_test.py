@@ -70,6 +70,7 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
      -- 'filename.mp4': render and export the animation as an h264 video (requires ffmpeg).
      -- 'filename.gif': render and export the animation a gif file (requires imagemagick).
     """
+
     #fps = 30
     plt.ioff()
     fig = plt.figure(figsize=(size*(1 + len(poses)), size))
@@ -139,6 +140,8 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         limit = len(all_frames)
     else:
         limit = min(limit, len(all_frames))
+
+    print("Trajectories: ", np.shape(trajectories))
 
     parents = skeleton.parents()
     def update_video(i):

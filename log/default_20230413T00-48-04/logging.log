@@ -1,0 +1,19 @@
+python run_poseformer.py -d custom -k myvideos -f 81 -c checkpoint_poseformer --evaluate gt81f.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
+CUDA Device Count:  1
+Namespace(actions='*', batch_size=512, bone_length_term=True, by_subject=False, checkpoint='checkpoint_poseformer', checkpoint_frequency=40, data_augmentation=True, dataset='custom', dense=False, disable_optimizations=False, downsample=1, dropout=0.0, epochs=200, evaluate='gt81f.bin', export_training_curves=False, keypoints='myvideos', learning_rate=0.0001, linear_projection=False, log='log/default', lr_decay=0.99, no_eval=False, no_proj=False, nolog=False, number_of_frames=81, render=True, resume='', stride=1, subjects_test='S9,S11', subjects_train='S1,S5,S6,S7,S8', subjects_unlabeled='', subset=1, test_time_augmentation=True, viz_action='custom', viz_bitrate=3000, viz_camera=0, viz_downsample=1, viz_export='output', viz_limit=-1, viz_no_ground_truth=False, viz_output='output.mp4', viz_size=6, viz_skip=0, viz_subject='myvideos.mp4', viz_video='./inference/input/myvideos.mp4', warmup=1)
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+Translate coco to h36m...
+INFO: Receptive field: 81 frames
+INFO: Trainable parameter count: 23.906501 Million
+Cuda.is_available
+Loading checkpoint checkpoint_poseformer/gt81f.bin
+INFO: Testing on 567 frames
+Rendering...
+INFO: this action is unlabeled. Ground truth will not be rendered.
+1.Rendering_prediction : (567, 17, 3)
+Exporting joint positions to output
+2.camera prediction : (567, 17, 3)
+3.anim_output : ()
+input_keypoints : (567, 17, 2)

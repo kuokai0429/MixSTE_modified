@@ -12,10 +12,10 @@ def parse_args():
 
     # General arguments
     parser.add_argument('-d', '--dataset', default='h36m', type=str, metavar='NAME', help='target dataset') # h36m or humaneva
-    parser.add_argument('-k', '--keypoints', default='cpn_ft_h36m_dbb', type=str, metavar='NAME', help='2D detections to use')
+    parser.add_argument('-k', '--keypoints', default='cpn_ft_h36m_dbb', type=str, metavar='NAME', help='2D detections to use') # 2D 數據來源 
     parser.add_argument('-str', '--subjects-train', default='S1,S5,S6,S7,S8', type=str, metavar='LIST',
                         help='training subjects separated by comma')
-    parser.add_argument('-ste', '--subjects-test', default='S9,S11', type=str, metavar='LIST', help='test subjects separated by comma')
+    parser.add_argument('-ste', '--subjects-test', default='S9,S11', type=str, metavar='LIST', help='test subjects separated by comma')  # 測試的資料
     parser.add_argument('-sun', '--subjects-unlabeled', default='', type=str, metavar='LIST',
                         help='unlabeled subjects separated by comma for self-supervision')
     parser.add_argument('-a', '--actions', default='*', type=str, metavar='LIST',
@@ -38,7 +38,7 @@ def parse_args():
     # Model arguments
     parser.add_argument('-s', '--stride', default=1, type=int, metavar='N', help='chunk size to use during training')
     parser.add_argument('-e', '--epochs', default=200, type=int, metavar='N', help='number of training epochs')
-    parser.add_argument('-b', '--batch-size', default=512, type=int, metavar='N', help='batch size in terms of predicted frames')
+    parser.add_argument('-b', '--batch-size', default=512, type=int, metavar='N', help='batch size in terms of predicted frames') # 原本為512
     parser.add_argument('-drop', '--dropout', default=0., type=float, metavar='P', help='dropout probability')
     parser.add_argument('-lr', '--learning-rate', default=0.0001, type=float, metavar='LR', help='initial learning rate')
     parser.add_argument('-lrd', '--lr-decay', default=0.99, type=float, metavar='LR', help='learning rate decay per epoch')
