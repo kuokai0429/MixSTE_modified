@@ -7,7 +7,7 @@
 
 import numpy as np
 
-from common.arguments import parse_args
+from common.arguments_poseformers import parse_args
 import torch
 
 import torch.nn as nn
@@ -27,7 +27,7 @@ import collections
 from common.model_poseformer_dennis import *
 
 from common.loss import *
-from common.generators import ChunkedGenerator, UnchunkedGenerator
+from common.generators_poseformer import ChunkedGenerator, UnchunkedGenerator
 from time import time
 from common.utils import *
 

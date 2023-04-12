@@ -45,7 +45,7 @@ python run_poseformer.py -d custom -k myvideos -f 81 -c checkpoint --evaluate gt
 
 3. 模型訓練 Training
 
-python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 --export-training-curves
+python run_poseformer.py -k cpn_ft_h36m_dbb -b 256 -f 243 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
 ( python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 -b 256 --export-training-curves )
 
 
@@ -84,6 +84,9 @@ python run.py -k cpn_ft_h36m_dbb -b 1024 -f 243 -s 243 -l log/run -c checkpoint 
 
 0. 看訓練 Loss & Accuracy
 tensorboard --logdir=log --port=8008
+
+1. 監控 nvidia-smi
+sudo watch -n 1 nvidia-smi
 
 1. 防止 VScode SSH 連線於 24 小時候自動中斷。 (替代方案: 使用遠端連線連至 Server 主畫面訓練，設定 "電源" -> "螢幕轉黑" -> "永不")
 https://support.huaweicloud.com/intl/en-us/modelarts_faq/modelarts_05_3168.html
