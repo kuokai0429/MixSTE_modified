@@ -70,7 +70,7 @@ cd data
 python prepare_data_2d_custom.py -i ../inference/output -o myvideos
 cd ..
 
-python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --evaluate checkpoint_cpn_243f_paper.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
+python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --evaluate best_epoch.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
 ( python run.py --custom_2d -d custom -k myvideos -f 243 -s 243 -c checkpoint --evaluate checkpoint_cpn_243f_paper.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6 )
 
 
