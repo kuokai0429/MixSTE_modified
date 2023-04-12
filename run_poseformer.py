@@ -23,16 +23,15 @@ from copy import deepcopy
 
 from common.camera import *
 import collections
-
 from common.model_poseformer_dennis import *
+
 from common.loss_poseformer import *
 from common.generators_poseformer import ChunkedGenerator, UnchunkedGenerator
-
 from time import time
-from datetime import datetime
 from common.utils import *
 from common.logging import Logger
 from torch.utils.tensorboard import SummaryWriter
+from datetime import datetime
 
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -76,6 +75,7 @@ def coco_h36m(keypoints):
     return keypoints_h36m
 
 ###################
+
 args = parse_args()
 # print(args)
 
