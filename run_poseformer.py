@@ -35,6 +35,10 @@ from common.logging import Logger
 from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 # os.environ["CUDA_VISIBLE_DEVICES"] = "0"
@@ -577,11 +581,6 @@ if not args.evaluate:
 
         # Save training curves after every epoch, as .png images (if requested)
         if args.export_training_curves and epoch > 3:
-            if 'matplotlib' not in sys.modules:
-                import matplotlib
-
-                matplotlib.use('Agg')
-                import matplotlib.pyplot as plt
 
             plt.figure()
             epoch_x = np.arange(3, len(losses_3d_train)) + 1
