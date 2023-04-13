@@ -45,9 +45,9 @@ python run_poseformer.py -d custom -k myvideos -f 81 -c checkpoint_poseformer --
 
 3. 模型訓練 Training
 
-python run_poseformer.py -k cpn_ft_h36m_dbb -b 256 -f 81 -l log/run -c checkpoint_poseformer --export-training-curves
-( python run_poseformer.py -k cpn_ft_h36m_dbb -b 256 -f 243 -l log/run -c checkpoint_poseformer --export-training-curves )
-( python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 -b 256 --export-training-curves )
+python run_poseformer.py -k cpn_ft_h36m_dbb -e 120 -b 1024 -f 81 -l log/run -c checkpoint_poseformer --export-training-curves
+( python run_poseformer.py -k cpn_ft_h36m_dbb -b 64 -f 243 -l log/run -c checkpoint_poseformer --export-training-curves )
+( python run_poseformer.py -k gt -f 81 -lr 0.0004 -lrd 0.99 --export-training-curves )
 
 
 
