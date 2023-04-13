@@ -1,4 +1,4 @@
 /home/brian/下載/MixSTE_revised/log/run_20230331T18-35-20 : MixSTE from Paper.
 /home/brian/下載/MixSTE_revised/log/run_20230405T20-28-36 : MixSTE with Post-LN Transformer Block.
 /home/brian/下載/MixSTE_revised/log/run_20230405T20-28-36 : MixSTE with PoolFormerBlock.
-/home/brian/下載/MixSTE_revised/log/run_20230413T12-15-05 : PoolFormer from Paper.
+/home/brian/下載/MixSTE_revised/log/run_20230413T12-15-05 : PoseFormer from Paper.
