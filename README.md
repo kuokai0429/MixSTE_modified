@@ -15,20 +15,7 @@ Revised from official implementation of CVPR 2022 paper (**MixSTE**) and officia
 <p align="center"> <img src="./assets/SittingDown_s1.gif" width="80%"> </p> 
 <p align="center"> Visualization of our method and ground truth on Human3.6M </p>
 
-## Environment
-
-The code is conducted under the following environment:
-
-* Ubuntu 18.04
-* Python 3.6.10
-* PyTorch 1.8.1
-* CUDA 10.2
-
-You can create the environment as follows:
-
-```bash
-conda env create -f requirements.yml
-```
+<br>
 
 ## Dataset
 
@@ -38,29 +25,41 @@ Please refer to it to set up the Human3.6M dataset (under ./data directory).
 The MPI-INF-3DHP dataset setting follows the [MMPose](https://github.com/open-mmlab/mmpose).
 Please refer it to set up the MPI-INF-3DHP dataset (also under ./data directory).
 
+<br>
+
 ## Evaluation
 
-* [ ] Download the checkpoints from [Baidu Disk](https://pan.baidu.com/s/1Gu7ItpkU0Q7SF_QVmlQ15A)(wnjf);
+```bash
+cd inference
+python infer_video_d2.py --cfg COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml --output-dir output --image-ext mp4 input
+cd ..
+```
+```bash
+cd data
+python prepare_data_2d_custom.py -i ../inference/output -o myvideos
+cd ..
+```
+```bash
+python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --evaluate best_epoch.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
+( python run.py --custom_2d -d custom -k myvideos -f 243 -s 243 -c checkpoint --evaluate checkpoint_cpn_243f_paper.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6 )
+```
 
-Then run the command below (evaluate on 243 frames input):
-
-> python run.py -k cpn_ft_h36m_dbb -c <checkpoint_path> --evaluate <checkpoint_file> -f 243 -s 243
+<br>
 
 ## Training from scratch
 
-Training on the 243 frames with two GPUs:
+```bash
+python run.py -k cpn_ft_h36m_dbb -b 1024 -f 81 -s 81 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
+( python run.py -k cpn_ft_h36m_dbb -b 1024 -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1 --export-training-curves )
+```
 
->  python run.py -k cpn_ft_h36m_dbb -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1
-
-if you want to take place of attention module with more efficient attention design, please refer to the rela.py, routing_transformer.py, and linearattention.py. These efficient design are coming from previous works:
-
-- https://github.com/rishikksh20/rectified-linear-attention
-- https://github.com/lucidrains/routing-transformer
-- https://arxiv.org/abs/2006.04768
+<br>
 
 ## Visulization
 
 Please refer to the https://github.com/facebookresearch/VideoPose3D#visualization.
+
+<br>
 
 ## Acknowledgement
 
