@@ -49,7 +49,7 @@ python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --eval
 ## Training from scratch
 
 ```bash
-python run.py -k cpn_ft_h36m_dbb -b 1024 -f 81 -s 81 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
+python run.py -k cpn_ft_h36m_dbb -b 2048 -f 81 -s 81 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
 ( python run.py -k cpn_ft_h36m_dbb -b 1024 -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1 --export-training-curves )
 ```
 
