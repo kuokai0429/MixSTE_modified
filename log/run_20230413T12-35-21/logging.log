@@ -109,3 +109,381 @@ save best checkpoint
 [73] time 62.41 lr 0.000048 3d_train 9.500431 3d_eval 31.231177 3d_valid 51.642081
 [74] time 62.86 lr 0.000048 3d_train 9.458008 3d_eval 31.051963 3d_valid 51.411306
 [75] time 62.32 lr 0.000048 3d_train 9.425833 3d_eval 30.580453 3d_valid 51.634964
+[76] time 62.73 lr 0.000047 3d_train 9.397806 3d_eval 30.939211 3d_valid 51.883718
+[77] time 62.51 lr 0.000047 3d_train 9.359428 3d_eval 31.046913 3d_valid 51.519473
+[78] time 62.32 lr 0.000046 3d_train 9.325369 3d_eval 31.264988 3d_valid 51.700490
+[79] time 62.38 lr 0.000046 3d_train 9.300510 3d_eval 31.810827 3d_valid 52.075296
+[80] time 62.32 lr 0.000045 3d_train 9.268834 3d_eval 31.214697 3d_valid 51.675817
+Saving checkpoint to checkpoint_poseformer/epoch_80.bin
+[81] time 62.48 lr 0.000045 3d_train 9.236791 3d_eval 31.687883 3d_valid 51.903256
+[82] time 62.69 lr 0.000044 3d_train 9.208474 3d_eval 31.898908 3d_valid 51.698746
+[83] time 62.48 lr 0.000044 3d_train 9.181876 3d_eval 31.074805 3d_valid 51.801983
+[84] time 62.86 lr 0.000043 3d_train 9.151398 3d_eval 31.264261 3d_valid 51.919074
+[85] time 62.48 lr 0.000043 3d_train 9.125892 3d_eval 31.619111 3d_valid 51.792772
+[86] time 62.75 lr 0.000043 3d_train 9.099155 3d_eval 31.366729 3d_valid 51.379462
+[87] time 62.56 lr 0.000042 3d_train 9.072431 3d_eval 31.056504 3d_valid 51.810562
+[88] time 62.31 lr 0.000042 3d_train 9.044537 3d_eval 31.398978 3d_valid 52.100373
+[89] time 62.41 lr 0.000041 3d_train 9.019897 3d_eval 31.758397 3d_valid 51.680068
+[90] time 62.41 lr 0.000041 3d_train 8.987482 3d_eval 31.400232 3d_valid 51.623312
+[91] time 62.39 lr 0.000040 3d_train 8.968588 3d_eval 31.274318 3d_valid 51.997422
+[92] time 62.51 lr 0.000040 3d_train 8.944379 3d_eval 31.447156 3d_valid 52.061336
+[93] time 62.45 lr 0.000040 3d_train 8.920770 3d_eval 31.586526 3d_valid 52.264924
+[94] time 62.99 lr 0.000039 3d_train 8.901274 3d_eval 31.549064 3d_valid 51.975454
+[95] time 62.41 lr 0.000039 3d_train 8.874221 3d_eval 31.681009 3d_valid 52.283044
+[96] time 62.82 lr 0.000038 3d_train 8.851660 3d_eval 31.507981 3d_valid 52.003096
+[97] time 62.64 lr 0.000038 3d_train 8.826659 3d_eval 31.613288 3d_valid 51.865557
+[98] time 62.19 lr 0.000038 3d_train 8.807052 3d_eval 31.854695 3d_valid 52.257399
+[99] time 62.54 lr 0.000037 3d_train 8.783522 3d_eval 32.218637 3d_valid 52.658001
+[100] time 62.47 lr 0.000037 3d_train 8.765578 3d_eval 31.713798 3d_valid 52.341745
+[101] time 62.49 lr 0.000037 3d_train 8.746137 3d_eval 31.683082 3d_valid 52.051499
+[102] time 62.67 lr 0.000036 3d_train 8.719796 3d_eval 31.673097 3d_valid 52.013621
+[103] time 62.49 lr 0.000036 3d_train 8.702359 3d_eval 31.697751 3d_valid 52.454300
+[104] time 62.86 lr 0.000036 3d_train 8.682156 3d_eval 32.122705 3d_valid 52.541742
+[105] time 62.42 lr 0.000035 3d_train 8.658967 3d_eval 31.759703 3d_valid 52.274427
+[106] time 62.85 lr 0.000035 3d_train 8.637998 3d_eval 31.078629 3d_valid 51.890647
+[107] time 62.55 lr 0.000034 3d_train 8.623108 3d_eval 31.714598 3d_valid 52.430618
+[108] time 62.38 lr 0.000034 3d_train 8.598541 3d_eval 31.543528 3d_valid 52.124970
+[109] time 62.48 lr 0.000034 3d_train 8.578199 3d_eval 31.576690 3d_valid 51.764424
+[110] time 62.44 lr 0.000033 3d_train 8.563877 3d_eval 31.439374 3d_valid 52.170154
+[111] time 62.46 lr 0.000033 3d_train 8.547035 3d_eval 31.968502 3d_valid 52.465096
+[112] time 62.65 lr 0.000033 3d_train 8.528259 3d_eval 31.504874 3d_valid 51.927125
+[113] time 62.61 lr 0.000032 3d_train 8.503027 3d_eval 31.428692 3d_valid 52.546399
+[114] time 62.84 lr 0.000032 3d_train 8.493074 3d_eval 31.952062 3d_valid 52.383686
+[115] time 62.44 lr 0.000032 3d_train 8.471829 3d_eval 31.489238 3d_valid 51.982163
+[116] time 62.81 lr 0.000031 3d_train 8.456670 3d_eval 31.493742 3d_valid 52.379104
+[117] time 62.56 lr 0.000031 3d_train 8.441499 3d_eval 31.578442 3d_valid 52.156699
+[118] time 62.41 lr 0.000031 3d_train 8.424968 3d_eval 31.573900 3d_valid 51.970694
+[119] time 62.42 lr 0.000031 3d_train 8.403267 3d_eval 32.213606 3d_valid 52.629987
+[120] time 62.41 lr 0.000030 3d_train 8.389206 3d_eval 31.892514 3d_valid 52.156820
+Saving checkpoint to checkpoint_poseformer/epoch_120.bin
+Evaluating...
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----SittingDown----
+Protocol #1 Error (MPJPE): 83.49900613062137 mm
+Protocol #2 Error (P-MPJPE): 67.3488173553325 mm
+Protocol #3 Error (N-MPJPE): 81.73990301906797 mm
+Velocity Error (MPJVE): 2.2843566097087944 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Greeting----
+Protocol #1 Error (MPJPE): 48.4075789864887 mm
+Protocol #2 Error (P-MPJPE): 38.362957125549336 mm
+Protocol #3 Error (N-MPJPE): 47.1307907219222 mm
+Velocity Error (MPJVE): 2.784064063301081 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Sitting----
+Protocol #1 Error (MPJPE): 66.7258209643882 mm
+Protocol #2 Error (P-MPJPE): 52.65580767112448 mm
+Protocol #3 Error (N-MPJPE): 65.21806543635044 mm
+Velocity Error (MPJVE): 1.5673200269680156 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----WalkDog----
+Protocol #1 Error (MPJPE): 53.40712393306032 mm
+Protocol #2 Error (P-MPJPE): 40.591622198947135 mm
+Protocol #3 Error (N-MPJPE): 50.96155659091875 mm
+Velocity Error (MPJVE): 3.0592741613291965 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Walking----
+Protocol #1 Error (MPJPE): 35.40223302527653 mm
+Protocol #2 Error (P-MPJPE): 26.19508650302052 mm
+Protocol #3 Error (N-MPJPE): 32.909572370741934 mm
+Velocity Error (MPJVE): 2.4583955792201753 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Purchases----
+Protocol #1 Error (MPJPE): 53.11903483536673 mm
+Protocol #2 Error (P-MPJPE): 37.964544757610284 mm
+Protocol #3 Error (N-MPJPE): 51.23316214721842 mm
+Velocity Error (MPJVE): 2.6756473391572215 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Eating----
+Protocol #1 Error (MPJPE): 46.04008748264585 mm
+Protocol #2 Error (P-MPJPE): 36.487165928607986 mm
+Protocol #3 Error (N-MPJPE): 44.18510705849774 mm
+Velocity Error (MPJVE): 1.87594287838309 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Discussion----
+Protocol #1 Error (MPJPE): 49.358231074591735 mm
+Protocol #2 Error (P-MPJPE): 37.78677476372508 mm
+Protocol #3 Error (N-MPJPE): 47.837810476165764 mm
+Velocity Error (MPJVE): 2.462406808522281 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----WalkTogether----
+Protocol #1 Error (MPJPE): 38.77268736662896 mm
+Protocol #2 Error (P-MPJPE): 30.060474240707887 mm
+Protocol #3 Error (N-MPJPE): 36.07468592765303 mm
+Velocity Error (MPJVE): 2.1842239881847028 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Waiting----
+Protocol #1 Error (MPJPE): 49.512831336204115 mm
+Protocol #2 Error (P-MPJPE): 35.98569422612388 mm
+Protocol #3 Error (N-MPJPE): 47.81101456180785 mm
+Velocity Error (MPJVE): 1.9731946404737133 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Phoning----
+Protocol #1 Error (MPJPE): 52.475006284048476 mm
+Protocol #2 Error (P-MPJPE): 39.03250804062306 mm
+Protocol #3 Error (N-MPJPE): 49.73758181636496 mm
+Velocity Error (MPJVE): 1.8135992468642685 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Smoking----
+Protocol #1 Error (MPJPE): 49.95102045231677 mm
+Protocol #2 Error (P-MPJPE): 39.05067727327012 mm
+Protocol #3 Error (N-MPJPE): 47.828994631085415 mm
+Velocity Error (MPJVE): 1.8132612593995237 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Photo----
+Protocol #1 Error (MPJPE): 59.8490344263908 mm
+Protocol #2 Error (P-MPJPE): 43.7401585508326 mm
+Protocol #3 Error (N-MPJPE): 57.712871644462965 mm
+Velocity Error (MPJVE): 2.1613948719606495 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Directions----
+Protocol #1 Error (MPJPE): 46.27861806651175 mm
+Protocol #2 Error (P-MPJPE): 34.7774505190381 mm
+Protocol #3 Error (N-MPJPE): 43.53431708909446 mm
+Velocity Error (MPJVE): 2.3901742661878016 mm
+----------
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+<class 'numpy.ndarray'> <class 'numpy.ndarray'>
+----Posing----
+Protocol #1 Error (MPJPE): 45.7438035132063 mm
+Protocol #2 Error (P-MPJPE): 34.13905567200062 mm
+Protocol #3 Error (N-MPJPE): 44.23408258755492 mm
+Velocity Error (MPJVE): 2.1386424538968236 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 51.9 mm
+Protocol #2 (P-MPJPE) action-wise average: 39.6 mm
+Protocol #3 (N-MPJPE) action-wise average: 49.9 mm
+Velocity      (MPJVE) action-wise average: 2.24 mm

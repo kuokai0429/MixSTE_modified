@@ -2,4 +2,4 @@
 /home/brian/下載/MixSTE_revised/log/run_20230331T18-35-20 : MixSTE with Post-LN Transformer Block. (243 frame)
 /home/brian/下載/MixSTE_revised/log/run_20230405T20-28-36 : MixSTE with PoolFormerBlock.(243 frame)
 /home/brian/下載/MixSTE_revised/log/run_20230413T12-35-21 : PoseFormer from Paper. (81 frame)
-/home/brian/下載/MixSTE_revised/log/ : MixSTE from Paper. (81 frame)
+/home/brian/下載/MixSTE_revised/log/run_20230418T16-14-55 : MixSTE from Paper. (81 frame)
