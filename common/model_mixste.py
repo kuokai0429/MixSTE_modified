@@ -682,34 +682,34 @@ class  MixSTE2(nn.Module):
 
         ################################################################
 
-        ## 2023.0322 Attention Block @Paper
-
-        self.STEblocks = nn.ModuleList([
-            Block(
-                dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
-                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
-            for i in range(depth)])
-
-        self.TTEblocks = nn.ModuleList([
-            Block(
-                dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
-                drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
-            for i in range(depth)])
-        
-        ## 2023.0322 PoolFormer Block @Brian
+        # ## 2023.0322 Attention Block @Paper
 
         # self.STEblocks = nn.ModuleList([
-        #     PoolFormerBlock(
-        #         dim=embed_dim_ratio, mlp_ratio=mlp_ratio, 
-        #         drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+        #     Block(
+        #         dim=embed_dim_ratio, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+        #         drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
         #     for i in range(depth)])
 
         # self.TTEblocks = nn.ModuleList([
-        #     PoolFormerBlock(
-        #         dim=embed_dim, mlp_ratio=mlp_ratio,
-        #         drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
-        #         changedim=False, currentdim=i+1, depth=depth)
+        #     Block(
+        #         dim=embed_dim, num_heads=num_heads, mlp_ratio=mlp_ratio, qkv_bias=qkv_bias, qk_scale=qk_scale,
+        #         drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
         #     for i in range(depth)])
+        
+        # 2023.0322 PoolFormer Block @Brian
+
+        self.STEblocks = nn.ModuleList([
+            PoolFormerBlock(
+                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, 
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+            for i in range(depth)])
+
+        self.TTEblocks = nn.ModuleList([
+            PoolFormerBlock(
+                dim=embed_dim, mlp_ratio=mlp_ratio,
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
+                changedim=False, currentdim=i+1, depth=depth)
+            for i in range(depth)])
 
         ################################################################
 

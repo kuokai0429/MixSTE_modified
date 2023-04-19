@@ -94,3 +94,457 @@ save best checkpoint
 [51] time 11.18 lr 0.000024 3d_train 70.428766 3d_eval 27.376292 3d_valid 45.886257 3d_val_velocity 2.293527
 [52] time 11.18 lr 0.000024 3d_train 69.863930 3d_eval 27.729619 3d_valid 46.108542 3d_val_velocity 2.271139
 [53] time 11.18 lr 0.000024 3d_train 69.067248 3d_eval 28.261774 3d_valid 45.927786 3d_val_velocity 2.268655
+[54] time 11.18 lr 0.000023 3d_train 68.450634 3d_eval 27.314469 3d_valid 46.799714 3d_val_velocity 2.252230
+[55] time 11.18 lr 0.000023 3d_train 67.713869 3d_eval 27.791376 3d_valid 45.453841 3d_val_velocity 2.238485
+save best checkpoint
+[56] time 11.17 lr 0.000023 3d_train 67.203316 3d_eval 27.894963 3d_valid 45.325504 3d_val_velocity 2.243663
+save best checkpoint
+[57] time 11.18 lr 0.000023 3d_train 66.741487 3d_eval 28.951538 3d_valid 45.922407 3d_val_velocity 2.226827
+[58] time 11.18 lr 0.000023 3d_train 65.873684 3d_eval 28.235450 3d_valid 44.495970 3d_val_velocity 2.211754
+save best checkpoint
+[59] time 11.17 lr 0.000022 3d_train 65.283782 3d_eval 26.886723 3d_valid 45.283633 3d_val_velocity 2.204099
+[60] time 11.18 lr 0.000022 3d_train 64.880099 3d_eval 26.317735 3d_valid 45.507767 3d_val_velocity 2.193451
+Saving checkpoint to checkpoint/epoch_60.bin
+[61] time 11.18 lr 0.000022 3d_train 64.407826 3d_eval 27.589252 3d_valid 45.901367 3d_val_velocity 2.201388
+[62] time 11.17 lr 0.000022 3d_train 63.801267 3d_eval 26.080857 3d_valid 45.674232 3d_val_velocity 2.180741
+[63] time 11.17 lr 0.000021 3d_train 63.233086 3d_eval 25.909962 3d_valid 45.141404 3d_val_velocity 2.176818
+[64] time 11.17 lr 0.000021 3d_train 62.799398 3d_eval 25.497531 3d_valid 45.751289 3d_val_velocity 2.175018
+[65] time 11.17 lr 0.000021 3d_train 62.240931 3d_eval 25.167168 3d_valid 45.222021 3d_val_velocity 2.162790
+[66] time 11.17 lr 0.000021 3d_train 61.796627 3d_eval 26.052098 3d_valid 45.546856 3d_val_velocity 2.154100
+[67] time 11.17 lr 0.000021 3d_train 61.549688 3d_eval 26.988370 3d_valid 45.559159 3d_val_velocity 2.156093
+[68] time 11.17 lr 0.000020 3d_train 60.848695 3d_eval 25.918344 3d_valid 44.641248 3d_val_velocity 2.143560
+[69] time 11.17 lr 0.000020 3d_train 60.458071 3d_eval 24.757529 3d_valid 45.514951 3d_val_velocity 2.143784
+[70] time 11.17 lr 0.000020 3d_train 60.024163 3d_eval 25.111989 3d_valid 44.903032 3d_val_velocity 2.135378
+[71] time 11.17 lr 0.000020 3d_train 59.674929 3d_eval 24.753198 3d_valid 45.131167 3d_val_velocity 2.144416
+[72] time 11.17 lr 0.000020 3d_train 59.199318 3d_eval 25.197378 3d_valid 45.084822 3d_val_velocity 2.130048
+[73] time 11.17 lr 0.000019 3d_train 58.803009 3d_eval 24.244545 3d_valid 45.270387 3d_val_velocity 2.123184
+[74] time 11.17 lr 0.000019 3d_train 58.324353 3d_eval 24.262568 3d_valid 45.292169 3d_val_velocity 2.122326
+[75] time 11.17 lr 0.000019 3d_train 58.055881 3d_eval 24.721779 3d_valid 45.335890 3d_val_velocity 2.120392
+[76] time 11.17 lr 0.000019 3d_train 57.623864 3d_eval 23.986719 3d_valid 45.054790 3d_val_velocity 2.112115
+[77] time 11.17 lr 0.000019 3d_train 57.272389 3d_eval 24.525981 3d_valid 44.914797 3d_val_velocity 2.107722
+[78] time 11.18 lr 0.000018 3d_train 56.871983 3d_eval 24.857584 3d_valid 45.131027 3d_val_velocity 2.107903
+[79] time 11.19 lr 0.000018 3d_train 56.487544 3d_eval 24.630712 3d_valid 44.695095 3d_val_velocity 2.104013
+[80] time 11.18 lr 0.000018 3d_train 56.247937 3d_eval 24.310518 3d_valid 45.085170 3d_val_velocity 2.103848
+Saving checkpoint to checkpoint/epoch_80.bin
+[81] time 11.17 lr 0.000018 3d_train 55.800778 3d_eval 23.871788 3d_valid 44.865926 3d_val_velocity 2.105124
+[82] time 11.17 lr 0.000018 3d_train 55.498652 3d_eval 23.054425 3d_valid 45.207591 3d_val_velocity 2.094907
+[83] time 11.17 lr 0.000018 3d_train 55.247389 3d_eval 23.666034 3d_valid 45.077625 3d_val_velocity 2.093820
+[84] time 11.17 lr 0.000017 3d_train 54.886599 3d_eval 24.490037 3d_valid 44.546921 3d_val_velocity 2.094297
+[85] time 11.17 lr 0.000017 3d_train 54.611222 3d_eval 23.920902 3d_valid 44.701706 3d_val_velocity 2.090561
+[86] time 11.17 lr 0.000017 3d_train 54.330011 3d_eval 22.650397 3d_valid 45.210162 3d_val_velocity 2.088090
+[87] time 11.17 lr 0.000017 3d_train 53.969339 3d_eval 22.573077 3d_valid 44.529215 3d_val_velocity 2.078878
+[88] time 11.17 lr 0.000017 3d_train 53.678873 3d_eval 23.688404 3d_valid 44.699140 3d_val_velocity 2.086365
+[89] time 11.17 lr 0.000017 3d_train 53.430392 3d_eval 23.130494 3d_valid 44.895815 3d_val_velocity 2.080656
+[90] time 11.17 lr 0.000016 3d_train 53.149285 3d_eval 22.395627 3d_valid 44.941626 3d_val_velocity 2.076729
+[91] time 11.17 lr 0.000016 3d_train 52.815795 3d_eval 23.370673 3d_valid 44.868683 3d_val_velocity 2.080530
+[92] time 11.18 lr 0.000016 3d_train 52.585148 3d_eval 22.978449 3d_valid 44.520867 3d_val_velocity 2.068068
+[93] time 11.18 lr 0.000016 3d_train 52.336585 3d_eval 22.895264 3d_valid 45.781475 3d_val_velocity 2.075805
+[94] time 11.17 lr 0.000016 3d_train 51.889177 3d_eval 23.323668 3d_valid 44.709178 3d_val_velocity 2.069801
+[95] time 11.18 lr 0.000016 3d_train 51.732776 3d_eval 23.030419 3d_valid 44.769866 3d_val_velocity 2.068659
+[96] time 11.17 lr 0.000015 3d_train 51.543797 3d_eval 22.324215 3d_valid 45.057227 3d_val_velocity 2.064233
+[97] time 11.17 lr 0.000015 3d_train 51.207028 3d_eval 22.702259 3d_valid 44.828022 3d_val_velocity 2.063790
+[98] time 11.18 lr 0.000015 3d_train 50.963946 3d_eval 22.048318 3d_valid 44.463577 3d_val_velocity 2.062878
+save best checkpoint
+[99] time 11.18 lr 0.000015 3d_train 50.785705 3d_eval 22.179803 3d_valid 44.585100 3d_val_velocity 2.053229
+[100] time 11.18 lr 0.000015 3d_train 50.561899 3d_eval 22.764587 3d_valid 45.779459 3d_val_velocity 2.058287
+Saving checkpoint to checkpoint/epoch_100.bin
+[101] time 11.18 lr 0.000015 3d_train 50.286667 3d_eval 22.492869 3d_valid 44.754756 3d_val_velocity 2.062791
+[102] time 11.18 lr 0.000014 3d_train 50.052108 3d_eval 22.351691 3d_valid 45.326114 3d_val_velocity 2.058762
+[103] time 11.18 lr 0.000014 3d_train 49.798426 3d_eval 22.226134 3d_valid 44.572801 3d_val_velocity 2.048727
+[104] time 11.18 lr 0.000014 3d_train 49.645780 3d_eval 21.533293 3d_valid 45.866273 3d_val_velocity 2.057657
+[105] time 11.18 lr 0.000014 3d_train 49.356825 3d_eval 21.661287 3d_valid 44.595974 3d_val_velocity 2.051942
+[106] time 11.18 lr 0.000014 3d_train 49.212692 3d_eval 21.375986 3d_valid 44.967112 3d_val_velocity 2.053869
+[107] time 11.18 lr 0.000014 3d_train 48.958124 3d_eval 21.564343 3d_valid 44.995616 3d_val_velocity 2.050183
+[108] time 11.18 lr 0.000014 3d_train 48.735812 3d_eval 21.845898 3d_valid 44.621974 3d_val_velocity 2.046156
+[109] time 11.19 lr 0.000014 3d_train 48.558236 3d_eval 21.473558 3d_valid 44.582509 3d_val_velocity 2.048146
+[110] time 11.20 lr 0.000013 3d_train 48.407876 3d_eval 21.296338 3d_valid 44.623357 3d_val_velocity 2.045871
+[111] time 11.19 lr 0.000013 3d_train 48.141511 3d_eval 21.349356 3d_valid 45.823258 3d_val_velocity 2.041612
+[112] time 11.19 lr 0.000013 3d_train 47.936582 3d_eval 21.460527 3d_valid 44.582088 3d_val_velocity 2.042394
+[113] time 11.19 lr 0.000013 3d_train 47.769462 3d_eval 21.727238 3d_valid 44.769618 3d_val_velocity 2.043090
+[114] time 11.19 lr 0.000013 3d_train 47.627181 3d_eval 21.903724 3d_valid 45.061148 3d_val_velocity 2.038244
+[115] time 11.19 lr 0.000013 3d_train 47.367160 3d_eval 21.533955 3d_valid 44.501623 3d_val_velocity 2.037262
+[116] time 11.19 lr 0.000013 3d_train 47.197231 3d_eval 21.059493 3d_valid 44.565992 3d_val_velocity 2.036098
+[117] time 11.19 lr 0.000012 3d_train 47.038260 3d_eval 21.163893 3d_valid 44.323086 3d_val_velocity 2.040028
+save best checkpoint
+[118] time 11.19 lr 0.000012 3d_train 47.056798 3d_eval 21.372648 3d_valid 44.835205 3d_val_velocity 2.040262
+[119] time 11.19 lr 0.000012 3d_train 46.614047 3d_eval 20.934347 3d_valid 44.107052 3d_val_velocity 2.034402
+save best checkpoint
+[120] time 11.19 lr 0.000012 3d_train 46.496238 3d_eval 20.458068 3d_valid 44.856150 3d_val_velocity 2.032617
+Saving checkpoint to checkpoint/epoch_120.bin
+------------------------------- End of Training -------------------------------
+Evaluating...
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----SittingDown----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 60.49107217362948 mm
+Protocol #2 Error (P-MPJPE): 47.846950661568414 mm
+Protocol #3 Error (N-MPJPE): 58.171358544911655 mm
+Velocity Error (MPJVE): 2.236270377068736 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Greeting----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 42.37172505236231 mm
+Protocol #2 Error (P-MPJPE): 33.678364925435744 mm
+Protocol #3 Error (N-MPJPE): 41.15334011536712 mm
+Velocity Error (MPJVE): 2.8887400943252337 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Sitting----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 53.45971741527319 mm
+Protocol #2 Error (P-MPJPE): 43.00410648807883 mm
+Protocol #3 Error (N-MPJPE): 51.94411834329367 mm
+Velocity Error (MPJVE): 1.6262954899575561 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----WalkDog----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 44.548224856595645 mm
+Protocol #2 Error (P-MPJPE): 34.7789256843958 mm
+Protocol #3 Error (N-MPJPE): 42.890142084340035 mm
+Velocity Error (MPJVE): 3.235941414009738 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Walking----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 29.822674069193102 mm
+Protocol #2 Error (P-MPJPE): 23.010212757814955 mm
+Protocol #3 Error (N-MPJPE): 28.619519935580353 mm
+Velocity Error (MPJVE): 2.6717268898131787 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Purchases----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 42.41486767032107 mm
+Protocol #2 Error (P-MPJPE): 31.986628353717876 mm
+Protocol #3 Error (N-MPJPE): 40.62772476587627 mm
+Velocity Error (MPJVE): 2.761377539813946 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Eating----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 40.537693094642414 mm
+Protocol #2 Error (P-MPJPE): 31.80434498860831 mm
+Protocol #3 Error (N-MPJPE): 39.546542034875 mm
+Velocity Error (MPJVE): 1.9873349557465483 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Discussion----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 43.282439112107255 mm
+Protocol #2 Error (P-MPJPE): 34.373403600977724 mm
+Protocol #3 Error (N-MPJPE): 42.118090969413075 mm
+Velocity Error (MPJVE): 2.6752670525471256 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----WalkTogether----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 30.380231030958605 mm
+Protocol #2 Error (P-MPJPE): 24.496482219547033 mm
+Protocol #3 Error (N-MPJPE): 29.10265606457749 mm
+Velocity Error (MPJVE): 2.3040052717944315 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Waiting----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 41.906383535745796 mm
+Protocol #2 Error (P-MPJPE): 31.621285816812414 mm
+Protocol #3 Error (N-MPJPE): 40.8572867528488 mm
+Velocity Error (MPJVE): 2.1354643693608155 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Phoning----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 45.10539723826306 mm
+Protocol #2 Error (P-MPJPE): 34.588653072714806 mm
+Protocol #3 Error (N-MPJPE): 43.89480436486858 mm
+Velocity Error (MPJVE): 1.9282676286197133 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Smoking----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 44.99832775722118 mm
+Protocol #2 Error (P-MPJPE): 35.98723176267298 mm
+Protocol #3 Error (N-MPJPE): 44.01210996311629 mm
+Velocity Error (MPJVE): 1.9564981876414849 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Photo----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 52.17430790197914 mm
+Protocol #2 Error (P-MPJPE): 40.11300366128916 mm
+Protocol #3 Error (N-MPJPE): 50.34762982319555 mm
+Velocity Error (MPJVE): 2.3390262940665707 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Directions----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 41.364600660190696 mm
+Protocol #2 Error (P-MPJPE): 32.001669174947196 mm
+Protocol #3 Error (N-MPJPE): 39.76693427899763 mm
+Velocity Error (MPJVE): 2.5156976868553707 mm
+----------
+Loading best checkpoint checkpoint/best_epoch.bin
+This model was trained for 119 epochs
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+Batch:  <class 'numpy.ndarray'>  Batch_2d:  <class 'numpy.ndarray'>
+----Posing----
+Test time augmentation: False
+Protocol #1 Error (MPJPE): 42.2142942318286 mm
+Protocol #2 Error (P-MPJPE): 32.80916155968932 mm
+Protocol #3 Error (N-MPJPE): 41.20528081367756 mm
+Velocity Error (MPJVE): 2.3218668467397316 mm
+----------
+Protocol #1   (MPJPE) action-wise average: 43.7 mm
+Protocol #2 (P-MPJPE) action-wise average: 34.1 mm
+Protocol #3 (N-MPJPE) action-wise average: 42.3 mm
+Velocity      (MPJVE) action-wise average: 2.37 mm
