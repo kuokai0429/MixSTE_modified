@@ -447,6 +447,56 @@ class MetaFormerBlock(nn.Module):
 #             x = x + self.drop_path(self.mlp(self.norm2(x)))
 #         return x
     
+# 2023.0420 SpatialFcFormerBlock Encoder Pre-LN @Brian
+class SpatialFcFormerBlock(nn.Module):
+
+    def __init__(self, dim, pool_size=3, mlp_ratio=4., 
+                 drop=0., drop_path=0., 
+                 act_layer=nn.GELU, norm_layer=nn.LayerNorm, 
+                 changedim=False, currentdim=0, depth=0):
+        super().__init__()
+
+        self.changedim = changedim
+        self.currentdim = currentdim
+        self.depth = depth
+
+        if self.changedim:
+            assert self.depth>0
+
+        self.norm1 = norm_layer(dim)
+
+
+        self.token_mixer = None
+
+
+        # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
+        self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
+        self.norm2 = norm_layer(dim)
+        mlp_hidden_dim = int(dim * mlp_ratio)
+        self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
+        
+        if self.changedim and self.currentdim < self.depth//2:
+            self.reduction = nn.Conv1d(dim, dim//2, kernel_size=1)
+            # self.reduction = nn.Linear(dim, dim//2)
+        elif self.changedim and depth > self.currentdim > self.depth//2:
+            self.improve = nn.Conv1d(dim, dim*2, kernel_size=1)
+            # self.improve = nn.Linear(dim, dim*2)
+
+    def forward(self, x, vis=False):
+
+        x = x + self.drop_path(self.token_mixer(self.norm1(x)))
+        x = x + self.drop_path(self.mlp(self.norm2(x)))
+        
+        if self.changedim and self.currentdim < self.depth//2:
+            x = rearrange(x, 'b t c -> b c t')
+            x = self.reduction(x)
+            x = rearrange(x, 'b c t -> b t c')
+        elif self.changedim and self.depth > self.currentdim > self.depth//2:
+            x = rearrange(x, 'b t c -> b c t')
+            x = self.improve(x)
+            x = rearrange(x, 'b c t -> b t c')
+        return x
+
 # 2023.0322 PoolFormerBlock Encoder Pre-LN @Brian
 class PoolFormerBlock(nn.Module):
 
