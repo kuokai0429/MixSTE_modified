@@ -381,7 +381,6 @@ class MetaFormerBlock(nn.Module):
 
         self.drop_path2 = DropPath(drop_path) if drop_path > 0. else nn.Identity()
 
-
     def forward(self, x):
         if self.use_layer_scale:
             x = x + self.drop_path(
