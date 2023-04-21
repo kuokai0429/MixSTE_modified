@@ -509,7 +509,7 @@ class SpatialFcFormerBlock(nn.Module):
             assert self.depth>0
 
         self.norm1 = norm_layer(dim)
-        self.token_mixer = SpatialFc(spatial_shape=[512, 1])
+        self.token_mixer = SpatialFc(spatial_shape=[32, 16]) # (32*16 = 512): 16524x512 @ 512x512
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
