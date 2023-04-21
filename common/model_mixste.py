@@ -393,58 +393,6 @@ class MetaFormerBlock(nn.Module):
             x = x + self.drop_path(self.token_mixer(self.norm1(x)))
             x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
-    
-# 2023.0322 PoolFormerBlock @Paper
-# class PoolFormerBlock(nn.Module):
-#     """
-#     Implementation of one PoolFormer block.
-#     --dim: embedding dim
-#     --pool_size: pooling size
-#     --mlp_ratio: mlp expansion ratio
-#     --act_layer: activation
-#     --norm_layer: normalization
-#     --drop: dropout rate
-#     --drop path: Stochastic Depth, 
-#         refer to https://arxiv.org/abs/1603.09382
-#     --use_layer_scale, --layer_scale_init_value: LayerScale, 
-#         refer to https://arxiv.org/abs/2103.17239
-#     """
-#     def __init__(self, dim, pool_size=3, mlp_ratio=4., 
-#                  act_layer=nn.GELU, norm_layer=GroupNorm, 
-#                  drop=0., drop_path=0., 
-#                  use_layer_scale=True, layer_scale_init_value=1e-5):
-
-#         super().__init__()
-
-#         self.norm1 = norm_layer(dim)
-#         self.token_mixer = Pooling(pool_size=pool_size)
-#         self.norm2 = norm_layer(dim)
-#         mlp_hidden_dim = int(dim * mlp_ratio)
-#         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, 
-#                        act_layer=act_layer, drop=drop)
-
-#         # The following two techniques are useful to train deep PoolFormers.
-#         self.drop_path = DropPath(drop_path) if drop_path > 0. \
-#             else nn.Identity()
-#         self.use_layer_scale = use_layer_scale
-#         if use_layer_scale:
-#             self.layer_scale_1 = nn.Parameter(
-#                 layer_scale_init_value * torch.ones((dim)), requires_grad=True)
-#             self.layer_scale_2 = nn.Parameter(
-#                 layer_scale_init_value * torch.ones((dim)), requires_grad=True)
-
-#     def forward(self, x):
-#         if self.use_layer_scale:
-#             x = x + self.drop_path(
-#                 self.layer_scale_1.unsqueeze(-1).unsqueeze(-1)
-#                 * self.token_mixer(self.norm1(x)))
-#             x = x + self.drop_path(
-#                 self.layer_scale_2.unsqueeze(-1).unsqueeze(-1)
-#                 * self.mlp(self.norm2(x)))
-#         else:
-#             x = x + self.drop_path(self.token_mixer(self.norm1(x)))
-#             x = x + self.drop_path(self.mlp(self.norm2(x)))
-#         return x
 
 # 2023.0322 PoolFormerBlock Encoder Pre-LN @Brian
 class PoolFormerBlock(nn.Module):
@@ -741,35 +689,35 @@ class  MixSTE2(nn.Module):
         #         drop=drop_rate, attn_drop=attn_drop_rate, drop_path=dpr[i], norm_layer=norm_layer, comb=False, changedim=False, currentdim=i+1, depth=depth)
         #     for i in range(depth)])
         
-        # # 2023.0322 PoolFormer Block @Brian
+        # 2023.0322 PoolFormer Block @Brian
+
+        self.STEblocks = nn.ModuleList([
+            PoolFormerBlock(
+                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, pool_size=1,
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
+            for i in range(depth)])
+
+        self.TTEblocks = nn.ModuleList([
+            PoolFormerBlock(
+                dim=embed_dim, mlp_ratio=mlp_ratio, pool_size=1,
+                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
+                changedim=False, currentdim=i+1, depth=depth)
+            for i in range(depth)])
+
+        # # 2023.0421 SpatialFcFormer Block @Brian
 
         # self.STEblocks = nn.ModuleList([
-        #     PoolFormerBlock(
+        #     SpatialFcFormerBlock(
         #         dim=embed_dim_ratio, mlp_ratio=mlp_ratio, 
         #         drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
         #     for i in range(depth)])
 
         # self.TTEblocks = nn.ModuleList([
-        #     PoolFormerBlock(
+        #     SpatialFcFormerBlock(
         #         dim=embed_dim, mlp_ratio=mlp_ratio,
         #         drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
         #         changedim=False, currentdim=i+1, depth=depth)
         #     for i in range(depth)])
-
-        # 2023.0421 SpatialFcFormer Block @Brian
-
-        self.STEblocks = nn.ModuleList([
-            SpatialFcFormerBlock(
-                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, 
-                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
-            for i in range(depth)])
-
-        self.TTEblocks = nn.ModuleList([
-            SpatialFcFormerBlock(
-                dim=embed_dim, mlp_ratio=mlp_ratio,
-                drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
-                changedim=False, currentdim=i+1, depth=depth)
-            for i in range(depth)])
 
         ################################################################
 
