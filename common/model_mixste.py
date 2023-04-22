@@ -411,7 +411,7 @@ class PoolFormerBlock(nn.Module):
             assert self.depth>0
 
         self.norm1 = norm_layer(dim)
-        self.token_mixer = Pooling(pool_size=pool_size)
+        self.token_mixer = Pooling(pool_size=pool_size) # pool_size: 1, 3, 5, 7
         # NOTE: drop path for stochastic depth, we shall see if this is better than dropout here
         self.drop_path = DropPath(drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = norm_layer(dim)
@@ -693,13 +693,13 @@ class  MixSTE2(nn.Module):
 
         self.STEblocks = nn.ModuleList([
             PoolFormerBlock(
-                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, pool_size=3,
+                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, pool_size=5,
                 drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
             for i in range(depth)])
 
         self.TTEblocks = nn.ModuleList([
             PoolFormerBlock(
-                dim=embed_dim, mlp_ratio=mlp_ratio, pool_size=3,
+                dim=embed_dim, mlp_ratio=mlp_ratio, pool_size=5,
                 drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
                 changedim=False, currentdim=i+1, depth=depth)
             for i in range(depth)])

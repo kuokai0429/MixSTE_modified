@@ -7,4 +7,4 @@
 /home/brian/下載/MixSTE_revised/log/run_20230420T02-42-28 : MixSTE with Post-LN Transformer Block. (81 frame)
 /home/brian/下載/MixSTE_revised/log/run_20230421T02-10-08 : MixSTE with SpatialFcFormer Block. (81 frame, spatial_shape=[512, 1])
 /home/brian/下載/MixSTE_revised/log/run_20230421T20-42-11 : MixSTE with PoolFormerBlock. (81 frame, pool_size=3)
-/home/brian/下載/MixSTE_revised/log/ : MixSTE with PoolFormerBlock. (81 frame, pool_size=)
+/home/brian/下載/MixSTE_revised/log/run_20230422T19-35-48 : MixSTE with PoolFormerBlock. (81 frame, pool_size=5)
