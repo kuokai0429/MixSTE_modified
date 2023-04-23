@@ -1,0 +1,93 @@
+Train!
+python run.py -k cpn_ft_h36m_dbb -b 1024 -f 81 -s 81 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
+CUDA Device Count:  1
+Namespace(actions='*', alpha=0.01, batch_size=1024, beta=2, bone_length_term=True, by_subject=False, checkpoint='checkpoint', checkpoint_frequency=20, compare=False, coverlr=False, cs=512, custom_2d=False, data_augmentation=True, dataset='h36m', dense=False, dep=8, depth=4, disable_optimizations=False, downsample=1, dropout=0.0, epochs=120, evaluate='', export_training_curves=True, ft=False, ftchk='epoch_330.pth', ftpath='checkpoint/exp13_ft2d', ftpostrf=False, gpu='0,1', keypoints='cpn_ft_h36m_dbb', learning_rate=4e-05, linear_channel_size=1024, linear_projection=False, log='log/run', lr_decay=0.99, lr_decay_gap=10000, min_loss=100000, no_eval=False, no_proj=False, nolog=False, number_of_frames=81, postrf=False, render=False, resume='', stride=81, subjects_test='S9,S11', subjects_train='S1,S5,S6,S7,S8', subjects_unlabeled='', subset=1, test_time_augmentation=True, viz_action=None, viz_bitrate=3000, viz_camera=0, viz_downsample=1, viz_export=None, viz_limit=-1, viz_no_ground_truth=False, viz_output=None, viz_size=5, viz_skip=0, viz_subject=None, viz_video=None, warmup=1)
+Loading dataset...
+Preparing data...
+Loading 2D detections...
+INFO: Receptive field: 81 frames
+INFO: Trainable parameter count: 16.890883 Million
+INFO: Testing on 543344 frames
+INFO: Training on 1559752 frames
+** Note: reported losses are averaged over all frames.
+** The final evaluation will be carried out after the last training epoch.
+------------------------------- Start Training -------------------------------
+[1] time 10.53 lr 0.000040 3d_train 707.196702 3d_eval 210.474265 3d_valid 214.411563 3d_val_velocity 4.255572
+save best checkpoint
+[2] time 10.55 lr 0.000040 3d_train 434.823262 3d_eval 145.561915 3d_valid 137.539950 3d_val_velocity 3.774250
+save best checkpoint
+[3] time 10.53 lr 0.000039 3d_train 342.049068 3d_eval 122.291761 3d_valid 117.392517 3d_val_velocity 3.569292
+save best checkpoint
+[4] time 10.54 lr 0.000039 3d_train 303.658684 3d_eval 110.382406 3d_valid 106.672143 3d_val_velocity 3.417016
+save best checkpoint
+[5] time 10.54 lr 0.000038 3d_train 277.973737 3d_eval 96.999881 3d_valid 91.669281 3d_val_velocity 3.280522
+save best checkpoint
+[6] time 10.56 lr 0.000038 3d_train 257.904803 3d_eval 92.493661 3d_valid 83.069973 3d_val_velocity 3.190893
+save best checkpoint
+[7] time 10.52 lr 0.000038 3d_train 241.802400 3d_eval 82.685198 3d_valid 79.677613 3d_val_velocity 3.117298
+save best checkpoint
+[8] time 10.56 lr 0.000037 3d_train 229.081382 3d_eval 83.824792 3d_valid 76.649788 3d_val_velocity 3.082925
+save best checkpoint
+[9] time 10.54 lr 0.000037 3d_train 219.608676 3d_eval 77.604927 3d_valid 77.869933 3d_val_velocity 3.048597
+[10] time 10.54 lr 0.000037 3d_train 210.488134 3d_eval 79.467943 3d_valid 77.327434 3d_val_velocity 3.029861
+[11] time 7.86 lr 0.000036 3d_train 203.475600 3d_eval 72.233599 3d_valid 70.794486 3d_val_velocity 2.980487
+save best checkpoint
+[12] time 5.68 lr 0.000036 3d_train 197.093335 3d_eval 74.786577 3d_valid 72.591016 3d_val_velocity 2.965417
+[13] time 5.68 lr 0.000035 3d_train 191.212241 3d_eval 69.823877 3d_valid 70.609113 3d_val_velocity 2.939556
+save best checkpoint
+[14] time 5.68 lr 0.000035 3d_train 186.222789 3d_eval 68.005729 3d_valid 65.443083 3d_val_velocity 2.922226
+save best checkpoint
+[15] time 5.68 lr 0.000035 3d_train 181.366149 3d_eval 65.314912 3d_valid 64.579644 3d_val_velocity 2.900479
+save best checkpoint
+[16] time 5.68 lr 0.000034 3d_train 177.227127 3d_eval 68.022948 3d_valid 64.873358 3d_val_velocity 2.892990
+[17] time 5.68 lr 0.000034 3d_train 172.843675 3d_eval 64.144982 3d_valid 65.292417 3d_val_velocity 2.885852
+[18] time 5.68 lr 0.000034 3d_train 169.047710 3d_eval 60.276195 3d_valid 65.199512 3d_val_velocity 2.872023
+[19] time 5.68 lr 0.000033 3d_train 165.824073 3d_eval 64.565556 3d_valid 68.427902 3d_val_velocity 2.878491
+[20] time 5.68 lr 0.000033 3d_train 162.496989 3d_eval 61.201434 3d_valid 61.417940 3d_val_velocity 2.841291
+Saving checkpoint to checkpoint/epoch_20.bin
+save best checkpoint
+[21] time 5.68 lr 0.000033 3d_train 159.569567 3d_eval 62.425032 3d_valid 67.083281 3d_val_velocity 2.860340
+[22] time 5.68 lr 0.000032 3d_train 157.021469 3d_eval 58.689173 3d_valid 61.580333 3d_val_velocity 2.827960
+[23] time 5.68 lr 0.000032 3d_train 154.330293 3d_eval 61.103709 3d_valid 62.804673 3d_val_velocity 2.827981
+[24] time 5.69 lr 0.000032 3d_train 151.823779 3d_eval 58.986877 3d_valid 62.193828 3d_val_velocity 2.831610
+[25] time 5.69 lr 0.000031 3d_train 149.006836 3d_eval 60.078350 3d_valid 61.340635 3d_val_velocity 2.814432
+save best checkpoint
+[26] time 5.69 lr 0.000031 3d_train 146.882191 3d_eval 55.256148 3d_valid 59.693456 3d_val_velocity 2.791813
+save best checkpoint
+[27] time 5.69 lr 0.000031 3d_train 144.745442 3d_eval 53.829112 3d_valid 58.278877 3d_val_velocity 2.795048
+save best checkpoint
+[28] time 5.69 lr 0.000030 3d_train 142.965169 3d_eval 57.226345 3d_valid 59.529320 3d_val_velocity 2.808183
+[29] time 5.69 lr 0.000030 3d_train 141.103527 3d_eval 55.125930 3d_valid 62.135713 3d_val_velocity 2.825058
+[30] time 5.70 lr 0.000030 3d_train 139.448093 3d_eval 54.060031 3d_valid 59.349749 3d_val_velocity 2.790026
+[31] time 5.70 lr 0.000030 3d_train 137.563303 3d_eval 55.104278 3d_valid 59.151217 3d_val_velocity 2.779849
+[32] time 5.70 lr 0.000029 3d_train 135.818197 3d_eval 54.532954 3d_valid 60.225939 3d_val_velocity 2.794056
+[33] time 5.70 lr 0.000029 3d_train 134.187773 3d_eval 54.275910 3d_valid 58.875189 3d_val_velocity 2.776171
+[34] time 5.70 lr 0.000029 3d_train 132.803912 3d_eval 53.571832 3d_valid 57.558904 3d_val_velocity 2.797901
+save best checkpoint
+[35] time 5.69 lr 0.000028 3d_train 131.385176 3d_eval 54.390677 3d_valid 57.250089 3d_val_velocity 2.757904
+save best checkpoint
+[36] time 5.69 lr 0.000028 3d_train 130.108439 3d_eval 54.527557 3d_valid 60.146934 3d_val_velocity 2.789181
+[37] time 5.69 lr 0.000028 3d_train 128.416845 3d_eval 52.006655 3d_valid 56.695014 3d_val_velocity 2.759466
+save best checkpoint
+[38] time 5.68 lr 0.000028 3d_train 127.479308 3d_eval 51.413502 3d_valid 58.304260 3d_val_velocity 2.786348
+[39] time 5.69 lr 0.000027 3d_train 125.949542 3d_eval 50.766322 3d_valid 56.458273 3d_val_velocity 2.762449
+save best checkpoint
+[40] time 5.69 lr 0.000027 3d_train 124.672556 3d_eval 50.530945 3d_valid 57.202649 3d_val_velocity 2.754280
+Saving checkpoint to checkpoint/epoch_40.bin
+[41] time 5.69 lr 0.000027 3d_train 123.710564 3d_eval 50.401506 3d_valid 55.619068 3d_val_velocity 2.757329
+save best checkpoint
+[42] time 5.69 lr 0.000026 3d_train 122.618192 3d_eval 49.322874 3d_valid 56.951884 3d_val_velocity 2.766090
+[43] time 5.69 lr 0.000026 3d_train 121.623895 3d_eval 51.374101 3d_valid 57.919375 3d_val_velocity 2.774590
+[44] time 5.70 lr 0.000026 3d_train 120.729684 3d_eval 53.794257 3d_valid 56.946973 3d_val_velocity 2.757816
+[45] time 5.69 lr 0.000026 3d_train 119.474428 3d_eval 50.952728 3d_valid 56.065753 3d_val_velocity 2.758533
+[46] time 5.69 lr 0.000025 3d_train 118.360311 3d_eval 52.412898 3d_valid 56.056637 3d_val_velocity 2.744902
+[47] time 5.69 lr 0.000025 3d_train 117.545950 3d_eval 49.295626 3d_valid 55.581834 3d_val_velocity 2.761420
+save best checkpoint
+[48] time 5.69 lr 0.000025 3d_train 116.651272 3d_eval 48.846673 3d_valid 55.969771 3d_val_velocity 2.754299
+[49] time 5.69 lr 0.000025 3d_train 115.962056 3d_eval 46.846367 3d_valid 54.846545 3d_val_velocity 2.749439
+save best checkpoint
+[50] time 5.69 lr 0.000024 3d_train 115.041723 3d_eval 51.238475 3d_valid 58.946231 3d_val_velocity 2.783348
+[51] time 5.69 lr 0.000024 3d_train 114.308219 3d_eval 49.608472 3d_valid 55.637748 3d_val_velocity 2.751348
+[52] time 5.69 lr 0.000024 3d_train 113.323000 3d_eval 46.371409 3d_valid 55.712959 3d_val_velocity 2.753589
+[53] time 5.69 lr 0.000024 3d_train 112.587958 3d_eval 46.931079 3d_valid 55.002723 3d_val_velocity 2.740817
+[54] time 5.70 lr 0.000023 3d_train 111.789221 3d_eval 47.121902 3d_valid 55.613265 3d_val_velocity 2.762891
