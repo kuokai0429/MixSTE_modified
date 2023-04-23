@@ -693,13 +693,13 @@ class  MixSTE2(nn.Module):
 
         self.STEblocks = nn.ModuleList([
             PoolFormerBlock(
-                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, pool_size=5,
+                dim=embed_dim_ratio, mlp_ratio=mlp_ratio, pool_size=7,
                 drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer)
             for i in range(depth)])
 
         self.TTEblocks = nn.ModuleList([
             PoolFormerBlock(
-                dim=embed_dim, mlp_ratio=mlp_ratio, pool_size=5,
+                dim=embed_dim, mlp_ratio=mlp_ratio, pool_size=7,
                 drop=drop_rate, drop_path=dpr[i], norm_layer=norm_layer, 
                 changedim=False, currentdim=i+1, depth=depth)
             for i in range(depth)])

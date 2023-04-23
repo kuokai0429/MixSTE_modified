@@ -8,3 +8,4 @@
 /home/brian/下載/MixSTE_revised/log/run_20230421T02-10-08 : MixSTE with SpatialFcFormer Block. (81 frame, spatial_shape=[512, 1])
 /home/brian/下載/MixSTE_revised/log/run_20230421T20-42-11 : MixSTE with PoolFormerBlock. (81 frame, pool_size=3)
 /home/brian/下載/MixSTE_revised/log/run_20230422T19-35-48 : MixSTE with PoolFormerBlock. (81 frame, pool_size=5)
+/home/brian/下載/MixSTE_revised/log/run_20230423T13-38-48 : MixSTE with PoolFormerBlock. (81 frame, pool_size=7)
