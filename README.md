@@ -66,6 +66,8 @@ python run.py -k cpn_ft_h36m_dbb -b 2048 -f 81 -s 81 -l log/run -c checkpoint -g
 ( python run.py -k cpn_ft_h36m_dbb -b 1024 -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1 --export-training-curves )
 ```
 
+Check log/Training Note.txt for detailed trainin history.
+
 <br>
 
 ## 結果視覺化 Visulization
