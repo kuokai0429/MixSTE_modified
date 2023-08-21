@@ -40,7 +40,7 @@ cd ..
 
 ## 模型預測 Run Inference
 
-Note: Input video length (frames) should be greater than receptive field (81, 243..).
+**NOTE: Input video length (frames) should be greater than receptive field (81, 243..).**
 
 ```bash
 cd inference
