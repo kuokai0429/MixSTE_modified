@@ -27,7 +27,9 @@ Please refer it to set up the MPI-INF-3DHP dataset (also under ./data directory)
 
 <br>
 
-## 資料集型態轉換 Prepare Human3.6M Dataset
+## 資料集型態轉換 Prepare Human3.6M Dataset *(Optional)*
+
+To prepare Human3.6M Dataset from raw zip file.
 
 ```bash
 cd data
@@ -40,7 +42,8 @@ cd ..
 
 ## 模型預測 Run Inference
 
-Input video length (frames) should be greater than receptive field (81, 243..).
+To inferences on a 81-frames pretrained model on input videos: 
+- Note that input video length (frames) should be greater than receptive field (81, 243..).
 
 ```bash
 cd inference
@@ -53,7 +56,6 @@ cd ..
 
 python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --evaluate best_epoch.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6
 ( python run.py --custom_2d -d custom -k myvideos -f 243 -s 243 -c checkpoint --evaluate checkpoint_cpn_243f_paper.bin --render --viz-subject myvideos.mp4 --viz-action custom --viz-camera 0 --viz-export output --viz-video ./inference/input/myvideos.mp4 --viz-output output.mp4 --viz-size 6 )
-
 ```
 
 <br>
@@ -61,12 +63,15 @@ python run.py --custom_2d -d custom -k myvideos -f 81 -s 81 -c checkpoint --eval
 
 ## 模型訓練 Training
 
+To train a 81-frames model on Human3.6M and export training curves:
+- Check log/Training Note.txt for detailed training history.
+
 ```bash
 python run.py -k cpn_ft_h36m_dbb -b 2048 -f 81 -s 81 -l log/run -c checkpoint -gpu 0,1 --export-training-curves
 ( python run.py -k cpn_ft_h36m_dbb -b 1024 -f 243 -s 243 -l log/run -c checkpoint -gpu 0,1 --export-training-curves )
 ```
 
-Check log/Training Note.txt for detailed trainin history.
+
 
 <br>
 
