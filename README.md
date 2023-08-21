@@ -1,4 +1,4 @@
-# A revised version of MixSTE
+# A modified version of MixSTE
 
 Revised from official implementation of CVPR 2022 paper (**MixSTE**) and official implementation of CVPR 2022 oral paper (**PoolFormer**).
 
