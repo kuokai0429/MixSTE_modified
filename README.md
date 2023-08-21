@@ -38,7 +38,9 @@ cd ..
 <br>
 
 
-## 模型預測 Run Inference (輸入影片長度至少大於模型訓練的 frame 數量)
+## 模型預測 Run Inference
+
+Note: 輸入影片長度至少大於模型訓練的 frame 數量。
 
 ```bash
 cd inference
