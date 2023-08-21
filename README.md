@@ -17,7 +17,7 @@ Modified from official implementation of CVPR 2022 paper (**MixSTE**) and offici
 
 <br>
 
-## Dataset
+## 訓練資料集 Dataset
 
 The Human3.6M dataset and HumanEva dataset setting follow the [VideoPose3D](https://github.com/facebookresearch/VideoPose3D).
 Please refer to it to set up the Human3.6M dataset (under ./data directory).
@@ -27,7 +27,7 @@ Please refer it to set up the MPI-INF-3DHP dataset (also under ./data directory)
 
 <br>
 
-## 資料準備型態轉換 Prepare Human3.6M Dataset
+## 資料集型態轉換 Prepare Human3.6M Dataset
 
 ```bash
 cd data
