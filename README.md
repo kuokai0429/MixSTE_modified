@@ -1,6 +1,6 @@
 # A modified version of MixSTE
 
-Revised from official implementation of CVPR 2022 paper (**MixSTE**) and official implementation of CVPR 2022 oral paper (**PoolFormer**).
+Modified from official implementation of CVPR 2022 paper (**MixSTE**) and official implementation of CVPR 2022 oral paper (**PoolFormer**).
 
 > - **MixSTE** ([Github Link](https://github.com/JinluZhang1126/MixSTE.git)) <br>
 > [MixSTE: Seq2seq Mixed Spatio-Temporal Encoder for 3D Human Pose Estimation in Video](https://arxiv.org/abs/2203.00859)
